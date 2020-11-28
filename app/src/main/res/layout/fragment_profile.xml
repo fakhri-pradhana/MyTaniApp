@@ -3,13 +3,273 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center"
     tools:context=".ProfileFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+<!--    BAGIAN 1 :NAME, USERNAME, AND AVATAR-->
+    <RelativeLayout
+        android:id="@+id/relative_username"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:padding="20dp"
+        android:background="@drawable/profile_top_elipse">
+
+        <ImageView
+            android:id="@+id/iv_profile_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile_dummy_avatar"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_profile_full_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bambang Pamungkas"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@id/iv_profile_avatar"
+            android:layout_centerVertical="true"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_below="@id/tv_profile_full_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/iv_profile_avatar"
+            android:fontFamily="@font/poppins"
+            android:includeFontPadding="false"
+            android:text="bambang_ganteng"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+<!--    BAGIAN 2 : CARDS-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="INI FRAGMENT PROFIL" />
+        android:padding="20dp"
+        android:layout_marginTop="-100dp"
+        app:layout_constraintTop_toBottomOf="@id/relative_username"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+<!--        CARD 1 : PERTANYAAN-->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/primary_dark_green"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_profil_bertanya"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/tv_profile_jml_pertanyaan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textSize="25sp"
+                    android:textColor="@color/white"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/label_jml_pertanyaan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bertanya"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_below="@id/tv_profile_jml_pertanyaan"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+<!--        CARD 2 : MENJAWAB-->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/primary_dark_green"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            android:layout_margin="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/ic_profil_menjawab"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/tv_profile_jml_jawaban"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="25sp"
+                    android:textColor="@color/white"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_bold"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/label_jml_jawaban"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menjawab"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:includeFontPadding="false"
+                    android:fontFamily="@font/poppins_medium"
+                    android:layout_below="@id/tv_profile_jml_jawaban"
+                    android:layout_centerHorizontal="true"/>
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:hint="Nama lengkap">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_green_profile"
+                    android:drawablePadding="10dp"
+                    android:text="Bambang Pamungkas" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

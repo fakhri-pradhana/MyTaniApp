@@ -21,14 +21,14 @@ public class NavigationBar extends AppCompatActivity {
         setContentView(R.layout.activity_navigation_bar);
 
         bottomNav = findViewById(R.id.bottom_nav);
-        /*if (savedInstanceState == null){
+        if (savedInstanceState == null){
             bottomNav.setItemSelected(R.id.goTo_fragment_home, true);
             fragmentManager = getSupportFragmentManager();
             HomeFragment homeFragment = new HomeFragment();
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
-        }*/
+        }
         bottomNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int id) {

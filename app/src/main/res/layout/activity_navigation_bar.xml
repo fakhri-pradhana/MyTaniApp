@@ -9,14 +9,15 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?attr/actionBarSize"/>
 
 
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="3dp"
         app:cnb_unselectedColor="@color/unselected_navbar"
