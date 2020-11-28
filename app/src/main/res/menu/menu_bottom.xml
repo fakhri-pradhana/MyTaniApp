@@ -7,7 +7,7 @@
         android:icon="@drawable/ic_home"
         app:cnb_iconColor="#fff"
         app:cnb_backgroundColor="@color/accent_orange"
-        app:cnb_textColor="#fff"
+        app:cnb_textColor="@color/white"
         android:title="Beranda" />
     <item
         android:id="@+id/ic_search"
