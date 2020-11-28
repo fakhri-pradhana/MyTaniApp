@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
@@ -41,15 +42,42 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Write a message to the database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
 
-                myRef.setValue("Hello, World!");
+
+                // GET ALL VALUES FROM LAYOUT
+                String name = et_RegName.getEditText().getText().toString();
+                String username = et_RegUsername.getEditText().getText().toString();
+                String email = et_RegEmail.getEditText().getText().toString();
+                String phoneNo = et_RegPhoneNo.getEditText().getText().toString();
+                String password = et_RegPassword.getEditText().getText().toString();
+
+                UserHelperClass request = new UserHelperClass(name, username, email, phoneNo, password);
+                submitUser(request);
+//                reference.child(phoneNo).setValue(helperClass);
 
             }
         });
     }
 
-    public void goLogin(View view) {
+    private void submitUser(UserHelperClass requests) {
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("users");
+        reference
+                .push()
+                .setValue(requests)
+                .addOnSuccessListener(this, aVoid -> {
+//                    loading.dismiss();
+                    et_RegName.setPrefixText("");
+                    et_RegUsername.setPrefixText("");
+                    et_RegEmail.setPrefixText("");
+                    et_RegPhoneNo.setPrefixText("");
+                    et_RegPassword.setPrefixText("");
+
+                    Toast.makeText(Register.this,
+                            "Data berhasil ditambahkan",
+                            Toast.LENGTH_SHORT).show();
+
+                    finish();
+                });
     }
 }
