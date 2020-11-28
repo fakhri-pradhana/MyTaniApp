@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "501479625170",
+    "firebase_url": "https://mytaniexpopab.firebaseio.com",
+    "project_id": "mytaniexpopab",
+    "storage_bucket": "mytaniexpopab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501479625170:android:dadc192ebb55008a62780b",
+        "android_client_info": {
+          "package_name": "com.android.mytani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501479625170-2qpt97omq65ng0ph0qhumvkkf86ik22b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2MOTpac67RWzr93btbdU_UGE8W6Vrhq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501479625170-2qpt97omq65ng0ph0qhumvkkf86ik22b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
