@@ -15,7 +15,8 @@
         android:theme="@style/Theme.MyTani"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".UserProfile"></activity>
+        <activity android:name=".NavigationBar"></activity>
+        <activity android:name=".UserProfile" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".Beranda" />
