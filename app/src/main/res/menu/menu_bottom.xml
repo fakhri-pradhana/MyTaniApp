@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    app:cnb_unselectedColor="#fff"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/ic_home"
+        android:id="@+id/goTo_fragment_home"
         android:icon="@drawable/ic_home"
         app:cnb_iconColor="#fff"
         app:cnb_backgroundColor="@color/accent_orange"
         app:cnb_textColor="@color/white"
         android:title="Beranda" />
     <item
-        android:id="@+id/ic_search"
+        android:id="@+id/goTo_fragment_discover"
         android:icon="@drawable/ic_search"
         app:cnb_iconColor="#fff"
         app:cnb_backgroundColor="@color/accent_orange"
         app:cnb_textColor="#fff"
         android:title="Cari" />
     <item
-        android:id="@+id/ic_profile"
+        android:id="@+id/goTo_fragment_profile"
         android:icon="@drawable/ic_profile"
         app:cnb_iconColor="#fff"
         app:cnb_backgroundColor="@color/accent_orange"
