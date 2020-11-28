@@ -15,12 +15,12 @@
         android:theme="@style/Theme.MyTani"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".NavigationBar"></activity>
         <activity android:name=".UserProfile" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
         <activity android:name=".Beranda" />
-        <activity android:name=".NavigationBar">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -144,7 +144,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:text="Daftar"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:onClick="registerUser"/>
 
             <Button
                 android:id="@+id/btn_register_toLogin"
