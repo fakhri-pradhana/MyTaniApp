@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class NavigationBar extends AppCompatActivity {
@@ -15,16 +18,20 @@ public class NavigationBar extends AppCompatActivity {
     ChipNavigationBar bottomNav;
     FragmentManager fragmentManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_bar);
+
 
         bottomNav = findViewById(R.id.bottom_nav);
         if (savedInstanceState == null){
             bottomNav.setItemSelected(R.id.goTo_fragment_home, true);
             fragmentManager = getSupportFragmentManager();
             HomeFragment homeFragment = new HomeFragment();
+
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, homeFragment)
                     .commit();
@@ -44,6 +51,7 @@ public class NavigationBar extends AppCompatActivity {
                         break;
                     case R.id.goTo_fragment_profile:
                         fragment = new ProfileFragment();
+                        showAllDataProfile(fragment);
                 }
 
                 // REPLACE FRAME LAYOUT WITH SELECTED FRAGMENT
@@ -57,5 +65,22 @@ public class NavigationBar extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showAllDataProfile(Fragment profilefragment) {
+        Intent intent = getIntent();
+        String getUsername = intent.getStringExtra("username");
+        String getFullName = intent.getStringExtra("name");
+        String getEmail = intent.getStringExtra("email");
+        String getPhoneNo = intent.getStringExtra("phoneNo");
+        String getPassword = intent.getStringExtra("password");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("username", getUsername);
+        bundle.putString("name", getFullName);
+        bundle.putString("email", getEmail);
+        bundle.putString("phoneNo", getPhoneNo);
+        bundle.putString("password", getPassword);
+        profilefragment.setArguments(bundle);
     }
 }

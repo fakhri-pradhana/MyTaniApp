@@ -12,6 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN = 5000;
@@ -20,11 +22,14 @@ public class MainActivity extends AppCompatActivity {
     ImageView iv_logo;
     TextView  tv_slogan;
 
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+
 
         // Animations
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
@@ -42,10 +47,19 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-                finish();
+                // CEK APAKAH USER SUDAH LOGIN
+                firebaseAuth = FirebaseAuth.getInstance();
+                if (firebaseAuth.getCurrentUser() != null){
+                    Intent goToHomeintent = new Intent(MainActivity.this, NavigationBar.class);
+                    startActivity(goToHomeintent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(MainActivity.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
         }, SPLASH_SCREEN);
+
     }
 }
