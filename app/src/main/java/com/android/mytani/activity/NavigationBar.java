@@ -1,4 +1,4 @@
-package com.android.mytani;
+package com.android.mytani.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,9 +7,12 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.android.mytani.R;
+import com.android.mytani.activity.MainActivity;
+import com.android.mytani.fragment.DiscoverFragment;
+import com.android.mytani.fragment.HomeFragment;
+import com.android.mytani.fragment.ProfileFragment;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class NavigationBar extends AppCompatActivity {
@@ -51,7 +54,7 @@ public class NavigationBar extends AppCompatActivity {
                         break;
                     case R.id.goTo_fragment_profile:
                         fragment = new ProfileFragment();
-                        showAllDataProfile(fragment);
+//                        showAllDataProfile(fragment);
                 }
 
                 // REPLACE FRAME LAYOUT WITH SELECTED FRAGMENT

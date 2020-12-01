@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.mytani.activity.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class UserProfile extends AppCompatActivity {

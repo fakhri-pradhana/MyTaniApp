@@ -11,7 +11,7 @@
         android:title="Beranda" />
     <item
         android:id="@+id/goTo_fragment_discover"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_search_home"
         app:cnb_iconColor="#fff"
         app:cnb_backgroundColor="@color/accent_orange"
         app:cnb_textColor="#fff"

@@ -12,5 +12,6 @@
     <color name="primary_dark_green">#408946</color>
     <color name="secondary_green">#EAF4EB</color>
     <color name="accent_orange">#FBB34F</color>
+    <color name="accent_orange_trans">#FDC77D</color>
     <color name="unselected_navbar">#FFFFFF</color>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".fragment.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/profile_dummy_avatar" />
+                tools:srcCompat="@drawable/ic_add_user_avatar"
+                app:tint="@color/white"/>
 
             <TextView
                 android:id="@+id/tv_profile_full_name"
@@ -35,7 +36,7 @@
                 android:layout_toRightOf="@id/iv_profile_avatar"
                 android:fontFamily="@font/poppins_bold"
                 android:includeFontPadding="false"
-                android:text="Bambang Pamungkas"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
@@ -48,7 +49,7 @@
                 android:layout_toRightOf="@id/iv_profile_avatar"
                 android:fontFamily="@font/poppins"
                 android:includeFontPadding="false"
-                android:text="bambang_ganteng"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
@@ -66,6 +67,7 @@
 
             <!--        CARD 1 : PERTANYAAN-->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_post"
                 android:layout_width="0dp"
                 android:layout_height="125dp"
                 android:layout_margin="10dp"
@@ -105,7 +107,7 @@
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/poppins_medium"
                         android:includeFontPadding="false"
-                        android:text="Bertanya"
+                        android:text="Post"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
@@ -115,6 +117,7 @@
 
             <!--        CARD 2 : MENJAWAB-->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_reply"
                 android:layout_width="0dp"
                 android:layout_height="125dp"
                 android:layout_margin="10dp"
@@ -154,7 +157,56 @@
                         android:layout_centerHorizontal="true"
                         android:fontFamily="@font/poppins_medium"
                         android:includeFontPadding="false"
-                        android:text="Menjawab"
+                        android:text="Balas"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <!--        CARD 2 : MENJAWAB-->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_views"
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/primary_dark_green"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/ic_profil_menjawab" />
+
+                    <TextView
+                        android:id="@+id/tv_profile_jml_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/poppins_bold"
+                        android:includeFontPadding="false"
+                        android:text="5"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/label_jml_views"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_profile_jml_views"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="@font/poppins_medium"
+                        android:includeFontPadding="false"
+                        android:text="Tayangan"
                         android:textColor="@color/white"
                         android:textSize="15sp" />
 
@@ -183,7 +235,8 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_green_profile"
                     android:drawablePadding="10dp"
-                    android:text="Bambang Pamungkas" />
+                    android:focusable="false"
+                    android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -198,7 +251,9 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_green_profile"
                     android:drawablePadding="10dp"
-                    android:text="bambang@mail.com" />
+                    android:focusable="false"
+
+                    android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -206,14 +261,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:hint="Email">
+                android:hint="Nomor Telepon">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_green_profile"
                     android:drawablePadding="10dp"
-                    android:text="bambang@gmail.com" />
+                    android:focusable="false"
+
+                    android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -228,7 +285,9 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_green_profile"
                     android:drawablePadding="10dp"
-                    android:text="assdasd" />
+                    android:focusable="false"
+
+                    android:text="" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
