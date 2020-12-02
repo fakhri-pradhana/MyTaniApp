@@ -323,7 +323,7 @@ public class HomeFragment extends Fragment{
         myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                showToast("Postingan telah berhasil ditambahkan");
+                showToast(getUserAvatarUrl());
                 popup_progressbar.setVisibility(View.INVISIBLE);
                 iv_popup_addPost_btn.setVisibility(View.VISIBLE);
                 popAddPost.dismiss();
