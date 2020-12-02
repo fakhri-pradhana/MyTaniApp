@@ -1,23 +1,32 @@
 package com.android.mytani.fragment;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.android.mytani.activity.MainActivity;
@@ -29,7 +38,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import static android.app.Activity.RESULT_OK;
+
 public class HomeFragment extends Fragment{
+
+    private static final int REQUESTCODE = 2;
+    private static final int PReqCode = 2;
 
     // firebase variables
     FirebaseUser currentUser;
@@ -45,6 +59,10 @@ public class HomeFragment extends Fragment{
     TextView tv_nama;
     TextView et_popup_title, et_popup_description;
     ProgressBar popup_progressbar;
+    AutoCompleteTextView autoComplete_popup_category;
+
+    // define forum category :
+    private final String[] option_category = {"Buah", "Sayur", "Kacang", "Pohon"};
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,6 +70,8 @@ public class HomeFragment extends Fragment{
 
     private String mParam1;
     private String mParam2;
+    private Uri pickedImgUri = null;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -79,19 +99,22 @@ public class HomeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // inflate layout with this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-
+        // hooks to layout
         iv_logout = view.findViewById(R.id.iv_logout);
         iv_show_popup = view.findViewById(R.id.iv_show_popup);
-
-
-
 
         // MENAMBAHKAN FORUM DENGAN POPUP
         // initialize popup
         inipopup();
+
+        // handle user click to add image post
+        setupPopImageClick();
+
+
         iv_show_popup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,8 +129,61 @@ public class HomeFragment extends Fragment{
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
-        // Inflate the layout for this fragment
         return view;
+    }
+
+    private void setupPopImageClick() {
+        iv_popup_post_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // when image clicked, open the gallery
+                // check permission first
+                checkAndRequestForPermission();
+            }
+        });
+    }
+
+    private void checkAndRequestForPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)){
+                Toast.makeText(getActivity(), "Tolong terima permission", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PReqCode);
+            }
+        }
+        else
+        {
+            openGalery();
+        }
+    }
+
+    private void openGalery() {
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, REQUESTCODE);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK
+                && requestCode == REQUESTCODE
+                && data!=null){
+
+            // user succes pick an image
+            // we need to save its  reference to a Uri variable
+            pickedImgUri = data.getData();
+            iv_popup_post_img.setImageURI(pickedImgUri);
+            Log.d("URI IMAGE  ", pickedImgUri.toString());
+
+        }
     }
 
     private void inipopup() {
@@ -125,19 +201,53 @@ public class HomeFragment extends Fragment{
         et_popup_description = popAddPost.findViewById(R.id.et_popup_description);
         iv_popup_addPost_btn = popAddPost.findViewById(R.id.iv_popup_add_btn);
         popup_progressbar = popAddPost.findViewById(R.id.popup_progressbar);
+        autoComplete_popup_category = popAddPost.findViewById(R.id.autoComplete_popup_category);
+
+        // list of forum categories :
+        ArrayAdapter arrayAdapter = new ArrayAdapter(
+                getActivity(),
+                R.layout.option_category_post,
+                option_category);
+
+        // default category value :
+        autoComplete_popup_category.setText(arrayAdapter.getItem(0).toString(), false);
+
+        // set Adapter for categry
+        autoComplete_popup_category.setAdapter(arrayAdapter);
 
 
         // load user profile avatar
         showUserAvatar();
 
+        // user clicked the create button --> post
         iv_popup_addPost_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 iv_popup_addPost_btn.setVisibility(View.INVISIBLE);
                 popup_progressbar.setVisibility(View.VISIBLE);
+
+                // validate user input
+                if (!et_popup_title.getText().toString().isEmpty()
+                    && !et_popup_description.getText().toString().isEmpty()
+                    && pickedImgUri != null
+                    && !autoComplete_popup_category.getText().toString().isEmpty()){
+
+                    showToast(autoComplete_popup_category.getText().toString());
+                    // TODO create post obj and add it to firebase database
+
+                } else {
+                    showToast("Semua wajib diisi termasuk gambar");
+                    iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+                    popup_progressbar.setVisibility(View.INVISIBLE);
+
+                }
             }
         });
 
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void showUserAvatar() {

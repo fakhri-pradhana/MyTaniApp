@@ -64,18 +64,10 @@ public class ProfileFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
 
-
-
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
-    final String avatarImageStorageRef = "images/profile_avatar" +
-            firebaseAuth.getUid();
-
-
-
     ArrayList<UserHelperClass> listUser = new ArrayList<>();
-    UserHelperClass userHelperClass;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -86,8 +78,6 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

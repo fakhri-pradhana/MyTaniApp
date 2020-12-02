@@ -43,16 +43,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_popup_title" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_popup_kategori"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:hint="Pilih kategori"
+        android:padding="8dp"
+        app:startIconDrawable="@drawable/ic_category_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_popup_description">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete_popup_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="none"
+            android:textColor="@color/black"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <ImageView
         android:id="@+id/iv_popup_img"
         android:layout_width="0dp"
         android:layout_height="225dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="8dp"
         android:background="#2d2d2d"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_popup_description"
+        app:layout_constraintTop_toBottomOf="@+id/til_popup_kategori"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <ImageView
@@ -71,6 +96,7 @@
         android:id="@+id/popup_progressbar"
         style="?android:attr/progressBarStyle"
         android:visibility="invisible"
+        android:padding="8dp"
         android:background="@drawable/circle_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
