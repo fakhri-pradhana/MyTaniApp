@@ -3,26 +3,80 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/popup_user_avatar"
         android:layout_width="48dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/et_popup_title"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="16dp"
-        tools:srcCompat="@tools:sample/avatars"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toEndOf="@+id/et_popup_title"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/et_popup_title"
+        android:background="@drawable/popup_edittext_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/insert_forum_title"
         android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/popup_user_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_popup_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_edittext_style"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Masukkan deskripsi forum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_popup_title" />
+
+    <ImageView
+        android:id="@+id/iv_popup_img"
+        android:layout_width="0dp"
+        android:layout_height="225dp"
+        android:scaleType="centerCrop"
+        android:background="#2d2d2d"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_popup_description"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/iv_popup_add_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/circle_bg"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_popup_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_popup_img"
+        app:srcCompat="@drawable/ic_create" />
+
+    <ProgressBar
+        android:id="@+id/popup_progressbar"
+        style="?android:attr/progressBarStyle"
+        android:visibility="invisible"
+        android:background="@drawable/circle_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_popup_add_btn"
+        app:layout_constraintEnd_toEndOf="@+id/iv_popup_add_btn"
+        app:layout_constraintStart_toStartOf="@+id/iv_popup_add_btn"
+        app:layout_constraintTop_toTopOf="@+id/iv_popup_add_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

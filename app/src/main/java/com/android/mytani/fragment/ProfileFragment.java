@@ -72,6 +72,8 @@ public class ProfileFragment extends Fragment {
     final String avatarImageStorageRef = "images/profile_avatar" +
             firebaseAuth.getUid();
 
+
+
     ArrayList<UserHelperClass> listUser = new ArrayList<>();
     UserHelperClass userHelperClass;
 
@@ -175,7 +177,7 @@ public class ProfileFragment extends Fragment {
         pd.setTitle("Uploading image ...");
         pd.show();
         final String randomKey = UUID.randomUUID().toString();
-        StorageReference imageFilePath = mStorageRef.child(avatarImageStorageRef);
+        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(firebaseAuth.getUid());
 
         imageFilePath.putFile(pickedImgUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -310,7 +312,7 @@ public class ProfileFragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = firebaseStorage.getReference();
 
-        StorageReference imageFilePath = mStorageRef.child(avatarImageStorageRef);
+        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(firebaseAuth.getUid());
 
         iv_profile = view.findViewById(R.id.iv_profile_avatar);
         imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
