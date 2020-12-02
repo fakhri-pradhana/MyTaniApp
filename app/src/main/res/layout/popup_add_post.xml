@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="24dp"
+    android:background="@drawable/rounded_rect_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,34 +12,37 @@
         android:id="@+id/popup_user_avatar"
         android:layout_width="48dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/et_popup_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/et_popup_title"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_buat_forum"
         tools:ignore="MissingConstraints"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
         android:id="@+id/et_popup_title"
-        android:background="@drawable/popup_edittext_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/popup_edittext_style"
         android:ems="10"
         android:hint="@string/insert_forum_title"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/popup_user_avatar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_buat_forum" />
 
     <EditText
         android:id="@+id/et_popup_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:background="@drawable/popup_edittext_style"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Masukkan deskripsi forum"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_popup_title" />
@@ -48,13 +52,15 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:background="@color/white"
         android:hint="Pilih kategori"
         android:padding="8dp"
-        app:startIconDrawable="@drawable/ic_category_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_popup_description">
+        app:layout_constraintTop_toBottomOf="@+id/et_popup_description"
+        app:startIconDrawable="@drawable/ic_category_grey">
 
         <AutoCompleteTextView
             android:id="@+id/autoComplete_popup_category"
@@ -62,7 +68,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:inputType="none"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,7 +77,9 @@
         android:id="@+id/iv_popup_img"
         android:layout_width="0dp"
         android:layout_height="225dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:background="#2d2d2d"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +92,7 @@
         android:id="@+id/iv_popup_add_btn"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:background="@drawable/circle_bg"
+        android:background="@drawable/circle_accent_bg"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_popup_img"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,5 +112,18 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_popup_add_btn"
         app:layout_constraintStart_toStartOf="@+id/iv_popup_add_btn"
         app:layout_constraintTop_toTopOf="@+id/iv_popup_add_btn" />
+
+    <TextView
+        android:id="@+id/tv_buat_forum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Buat Forum"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
