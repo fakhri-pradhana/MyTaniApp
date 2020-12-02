@@ -43,6 +43,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -64,8 +65,12 @@ public class ProfileFragment extends Fragment {
     private StorageReference mStorageRef;
 
 
+
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
+    final String avatarImageStorageRef = "images/profile_avatar" +
+            firebaseAuth.getUid();
 
     ArrayList<UserHelperClass> listUser = new ArrayList<>();
     UserHelperClass userHelperClass;
@@ -79,6 +84,8 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,7 +158,7 @@ public class ProfileFragment extends Fragment {
             // we need to save its  reference to a Uri variable
             pickedImgUri = data.getData();
             Log.d("URI IMAGE  ", pickedImgUri.toString());
-            iv_profile.setImageURI(pickedImgUri);
+//            iv_profile.setImageURI(pickedImgUri);
 
             firebaseStorage = FirebaseStorage.getInstance();
             mStorageRef = firebaseStorage.getReference();
@@ -168,14 +175,25 @@ public class ProfileFragment extends Fragment {
         pd.setTitle("Uploading image ...");
         pd.show();
         final String randomKey = UUID.randomUUID().toString();
-        StorageReference riversRef = mStorageRef.child("images/" + randomKey);
+        StorageReference imageFilePath = mStorageRef.child(avatarImageStorageRef);
 
-        riversRef.putFile(pickedImgUri)
+        imageFilePath.putFile(pickedImgUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         pd.dismiss();
                         showToast("Image uploaded");
+
+                        iv_profile.findViewById(R.id.iv_profile_avatar);
+                        imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get()
+                                        .load(uri)
+                                        .placeholder(R.drawable.ic_add_user_avatar)
+                                        .into(iv_profile);
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -188,7 +206,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                 double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Progress" + (int) progressPercent + "%");
+                pd.setMessage("Progress " + (int) progressPercent + "%");
             }
         });
 
@@ -244,6 +262,7 @@ public class ProfileFragment extends Fragment {
         tv_fullName = view.findViewById(R.id.tv_profile_full_name);
         tv_username = view.findViewById(R.id.tv_profile_username);
 
+        showProfileAvatar(view);
         String userId = firebaseAuth.getUid();
         DatabaseReference reference = firebaseDatabase.getReference("users");
 
@@ -267,6 +286,7 @@ public class ProfileFragment extends Fragment {
                     til_password.getEditText().setText(passwordFromDB);
                     til_email.getEditText().setText(emailFromDB);
                     tv_fullName.setText(nameFromDB);
+                    iv_profile.setImageURI(pickedImgUri);
                 } else {
                     til_fullName.getEditText().setText((CharSequence) listUser.get(1));
                     tv_username.setText("@" + (CharSequence) listUser.get(2));
@@ -274,6 +294,7 @@ public class ProfileFragment extends Fragment {
                     til_phoneNo.getEditText().setText((CharSequence) listUser.get(3));
                     til_password.getEditText().setText((CharSequence) listUser.get(4));
                     tv_fullName.setText((CharSequence) listUser.get(1));
+                    iv_profile.setImageURI(pickedImgUri);
                 }
 
             }
@@ -285,6 +306,24 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+    private void showProfileAvatar(View view) {
+        firebaseStorage = FirebaseStorage.getInstance();
+        mStorageRef = firebaseStorage.getReference();
+
+        StorageReference imageFilePath = mStorageRef.child(avatarImageStorageRef);
+
+        iv_profile = view.findViewById(R.id.iv_profile_avatar);
+        imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri)
+                        .placeholder(R.drawable.ic_add_user_avatar)
+                        .into(iv_profile);
+            }
+        });
+
+    }
 
 
 }

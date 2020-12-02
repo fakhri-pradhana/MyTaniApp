@@ -24,8 +24,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerVertical="true"
-                tools:srcCompat="@drawable/ic_add_user_avatar"
-                app:tint="@color/white"/>
+                android:src="@drawable/ic_add_user_avatar"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:id="@+id/tv_profile_full_name"
@@ -86,7 +86,7 @@
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/ic_profil_bertanya" />
+                        android:background="@drawable/ic_profil_bertanya" />
 
                     <TextView
                         android:id="@+id/tv_profile_jml_pertanyaan"
