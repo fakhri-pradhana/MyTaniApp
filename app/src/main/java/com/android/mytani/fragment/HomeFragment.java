@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,14 +22,20 @@ import android.widget.Toolbar;
 
 import com.android.mytani.activity.MainActivity;
 import com.android.mytani.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class HomeFragment extends Fragment{
 
     // firebase variables
-    FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference mStorageRef;
+    final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     // dialog
     Dialog popAddPost;
@@ -65,6 +72,7 @@ public class HomeFragment extends Fragment{
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -77,6 +85,9 @@ public class HomeFragment extends Fragment{
 
         iv_logout = view.findViewById(R.id.iv_logout);
         iv_show_popup = view.findViewById(R.id.iv_show_popup);
+
+
+
 
         // MENAMBAHKAN FORUM DENGAN POPUP
         // initialize popup
@@ -115,6 +126,10 @@ public class HomeFragment extends Fragment{
         iv_popup_addPost_btn = popAddPost.findViewById(R.id.iv_popup_add_btn);
         popup_progressbar = popAddPost.findViewById(R.id.popup_progressbar);
 
+
+        // load user profile avatar
+        showUserAvatar();
+
         iv_popup_addPost_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,5 +138,22 @@ public class HomeFragment extends Fragment{
             }
         });
 
+    }
+
+    private void showUserAvatar() {
+        // initialize firebase storage
+        StorageReference mStorageRef;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(firebaseAuth.getUid());
+
+        imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get()
+                        .load(uri)
+                        .into(iv_popup_userAvatar_img);
+            }
+        });
     }
 }
