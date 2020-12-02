@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,11 +32,16 @@ import android.widget.Toolbar;
 
 import com.android.mytani.activity.MainActivity;
 import com.android.mytani.R;
+import com.android.mytani.models.Post;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import static android.app.Activity.RESULT_OK;
@@ -49,7 +55,8 @@ public class HomeFragment extends Fragment{
     FirebaseUser currentUser;
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
-    final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
 
     // dialog
     Dialog popAddPost;
@@ -70,6 +77,7 @@ public class HomeFragment extends Fragment{
 
     private String mParam1;
     private String mParam2;
+    String imageAvatarUri;
     private Uri pickedImgUri = null;
 
 
@@ -99,6 +107,10 @@ public class HomeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // initialize firebase current user
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
 
         // inflate layout with this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -232,8 +244,43 @@ public class HomeFragment extends Fragment{
                     && pickedImgUri != null
                     && !autoComplete_popup_category.getText().toString().isEmpty()){
 
-                    showToast(autoComplete_popup_category.getText().toString());
                     // TODO create post obj and add it to firebase database
+
+                    // upload the post image to firebase storage
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("image_forum");
+                    StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
+                    imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageDownloadLink = uri.toString();
+
+                                    // create post object
+                                    Post post = new Post(
+                                            et_popup_title.getText().toString(),
+                                            et_popup_description.getText().toString(),
+                                            autoComplete_popup_category.getText().toString(),
+                                            imageDownloadLink,
+                                            currentUser.getUid(),
+                                            getUserAvatarUrl());
+
+                                    // finally add post to firebase database
+                                    addPost(post);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    showToast(e.getMessage());
+                                    popup_progressbar.setVisibility(View.INVISIBLE);
+                                    iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+                                }
+                            });
+
+                        }
+                    });
 
                 } else {
                     showToast("Semua wajib diisi termasuk gambar");
@@ -241,6 +288,45 @@ public class HomeFragment extends Fragment{
                     popup_progressbar.setVisibility(View.INVISIBLE);
 
                 }
+            }
+        });
+
+    }
+
+    private String getUserAvatarUrl() {
+
+        // initialize firebase storage
+        StorageReference mStorageRef;
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(currentUser.getUid());
+
+        imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                imageAvatarUri = uri.toString();
+            }
+        });
+
+        return imageAvatarUri;
+    }
+
+    private void addPost(Post post) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference().child("posts").push();
+
+        // get post unique ID and update post key
+        String key = myRef.getKey();
+        post.setPostKey(key);
+
+        // add post data to firebase
+        myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                showToast("Postingan telah berhasil ditambahkan");
+                popup_progressbar.setVisibility(View.INVISIBLE);
+                iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+                popAddPost.dismiss();
             }
         });
 
@@ -255,7 +341,7 @@ public class HomeFragment extends Fragment{
         StorageReference mStorageRef;
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
-        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(firebaseAuth.getUid());
+        StorageReference imageFilePath = mStorageRef.child("image_avatar/").child(currentUser.getUid());
 
         imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -266,4 +352,5 @@ public class HomeFragment extends Fragment{
             }
         });
     }
+
 }
