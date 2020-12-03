@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.mytani.R;
@@ -28,6 +29,7 @@ public class Login extends AppCompatActivity {
 
     private static final String TAG = "LOGIN CLASS";
     Button btn_callRegister, btn_login;
+    ProgressBar loading_login;
     TextInputLayout et_logEmail, et_logPassword;
 
     // FIREBASE AUTH VARIABLES
@@ -41,6 +43,7 @@ public class Login extends AppCompatActivity {
         // HOOKS TO LAYOUT
         et_logEmail = findViewById(R.id.et_login_email);
         et_logPassword = findViewById(R.id.et_login_password);
+        loading_login = findViewById(R.id.loading_login);
 
         // PINDAH REGISTER
         btn_callRegister = findViewById(R.id.btn_login_callRegister);
@@ -101,6 +104,9 @@ public class Login extends AppCompatActivity {
 
     private void authenticateUser() {
         // INITIALIZE FIREBASE AUTH
+        loading_login.setVisibility(View.VISIBLE);
+        btn_login.setVisibility(View.INVISIBLE);
+
         firebaseAuth = FirebaseAuth.getInstance();
         String userEnteredEmail = et_logEmail.getEditText().getText().toString();
         String userEnteredPassword = et_logPassword.getEditText().getText().toString();
@@ -113,12 +119,16 @@ public class Login extends AppCompatActivity {
                     Log.d(TAG, "signInWithEmail:success");
 //                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //                    getUserProfileData(currentFirebaseUser.getUid());
+                    et_logEmail.getEditText().setText("");
+                    et_logPassword.getEditText().setText("");
                     startActivity(new Intent(Login.this, NavigationBar.class));
 
                 } else {
                     // If sign in fails, display a message to the user.
+                    et_logEmail.getEditText().setText("");
+                    et_logPassword.getEditText().setText("");
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
-                    Toast.makeText(Login.this, "Authentication failed.",
+                    Toast.makeText(Login.this, "Gagal untuk login",
                             Toast.LENGTH_SHORT).show();
                 }
             }

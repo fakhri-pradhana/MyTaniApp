@@ -1,7 +1,9 @@
 package com.android.mytani.fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -137,12 +139,43 @@ public class HomeFragment extends Fragment{
         iv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                confirmDialogSignOut();
             }
         });
+
         return view;
     }
+    private void confirmDialogSignOut(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                getActivity());
+
+        // set title dialog
+        alertDialogBuilder.setTitle("Yakin ingin Sign-out?");
+
+        // set pesan dari dialog
+        alertDialogBuilder
+                .setMessage("Klik Ya untuk keluar")
+                .setCancelable(true)
+                .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // jika tombol diklik, maka akan signout dan kembali ke splash screen
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getActivity(), MainActivity.class));
+                    }
+                })
+                .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // membuat alert dialog dari builder
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // menampilkan alert dialog
+        alertDialog.show();
+    }
+
 
     private void setupPopImageClick() {
         iv_popup_post_img.setOnClickListener(new View.OnClickListener() {
