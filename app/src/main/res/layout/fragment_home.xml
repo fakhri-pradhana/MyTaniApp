@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/primary_dark_green"
+        android:background="@drawable/rounded_top_background"
         android:padding="20dp">
 
         <ImageView
@@ -19,9 +20,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_logout"
-            android:background="@color/white"
+            android:background="@drawable/rounded_white_button"
             android:layout_centerVertical="true"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            app:tint="@color/accent_orange" />
 
         <TextView
             android:id="@+id/appname"
@@ -38,11 +40,11 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ic_add"
-            android:tint="@color/white"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="5dp"
-            android:background="@color/accent_orange_trans"/>
+            android:background="@drawable/rounded_accent_button"
+            app:tint="@color/white" />
     </RelativeLayout>
 
     <ScrollView

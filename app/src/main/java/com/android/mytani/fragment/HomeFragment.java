@@ -383,6 +383,11 @@ public class HomeFragment extends Fragment{
                         .load(uri)
                         .into(iv_popup_userAvatar_img);
             }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast("Belum ada foto");
+            }
         });
     }
 
