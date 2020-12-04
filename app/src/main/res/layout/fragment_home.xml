@@ -294,8 +294,9 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_forum_posts"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
+                    android:layout_height="300dp"/>
 
             </LinearLayout>
 

@@ -16,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,17 +37,24 @@ import android.widget.Toolbar;
 
 import com.android.mytani.activity.MainActivity;
 import com.android.mytani.R;
+import com.android.mytani.adapter.PostAdapter;
 import com.android.mytani.models.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -53,9 +63,18 @@ public class HomeFragment extends Fragment{
     private static final int REQUESTCODE = 2;
     private static final int PReqCode = 2;
 
+    // recycler view
+    RecyclerView recyclerView_post;
+    PostAdapter postAdapter;
+
+    // Post list
+    List<Post> postList;
+
     // firebase variables
     FirebaseUser currentUser;
     private FirebaseStorage firebaseStorage;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     private StorageReference mStorageRef;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
@@ -110,12 +129,19 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // inflate layout with this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // recycler view post
+        recyclerView_post = view.findViewById(R.id.rv_forum_posts);
+        recyclerView_post.setHasFixedSize(true);
+        recyclerView_post.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("posts");
+
         // initialize firebase current user
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
-
-        // inflate layout with this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         // hooks to layout
         iv_logout = view.findViewById(R.id.iv_logout);
@@ -145,6 +171,31 @@ public class HomeFragment extends Fragment{
 
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // get list posts from database
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                postList = new ArrayList<>();
+                for (DataSnapshot postnap : snapshot.getChildren()){
+                    Post post = postnap.getValue(Post.class);
+                    postList.add(post);
+                }
+                postAdapter = new PostAdapter(getActivity(), postList);
+                recyclerView_post.setAdapter(postAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void confirmDialogSignOut(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 getActivity());
@@ -356,7 +407,7 @@ public class HomeFragment extends Fragment{
         myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                showToast(getUserAvatarUrl());
+                showToast("Forum berhasil dibuat");
                 popup_progressbar.setVisibility(View.INVISIBLE);
                 iv_popup_addPost_btn.setVisibility(View.VISIBLE);
                 popAddPost.dismiss();
