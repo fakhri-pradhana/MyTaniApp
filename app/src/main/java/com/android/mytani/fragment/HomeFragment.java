@@ -328,7 +328,6 @@ public class HomeFragment extends Fragment{
                     && pickedImgUri != null
                     && !autoComplete_popup_category.getText().toString().isEmpty()){
 
-                    // TODO create post obj and add it to firebase database
 
                     // upload the post image to firebase storage
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("image_forum");
@@ -336,7 +335,6 @@ public class HomeFragment extends Fragment{
                     imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                             imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
@@ -410,6 +408,11 @@ public class HomeFragment extends Fragment{
                 showToast("Forum berhasil dibuat");
                 popup_progressbar.setVisibility(View.INVISIBLE);
                 iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+
+                et_popup_title.setText("");
+                et_popup_description.setText("");
+                autoComplete_popup_category.setText("");
+                iv_popup_post_img.setImageResource(R.drawable.bg_add_image);
                 popAddPost.dismiss();
             }
         });
