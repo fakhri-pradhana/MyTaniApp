@@ -46,6 +46,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
@@ -61,13 +62,20 @@ public class ProfileFragment extends Fragment {
     static int REQUESTCODE = 1;
     Uri pickedImgUri;
 
+    // firebase variables
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
+
+    // used in onstart method for get profile data and pass it to list
+    private FirebaseDatabase firebaseProfilData;
+    private DatabaseReference profileDataReference;
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     ArrayList<UserHelperClass> listUser = new ArrayList<>();
+
+    List<UserHelperClass> userList;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -76,6 +84,14 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // get profile data from firebase
 
     }
 

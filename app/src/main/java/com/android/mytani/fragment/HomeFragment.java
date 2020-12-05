@@ -136,6 +136,7 @@ public class HomeFragment extends Fragment{
         recyclerView_post = view.findViewById(R.id.rv_forum_posts);
         recyclerView_post.setHasFixedSize(true);
         recyclerView_post.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("posts");
 

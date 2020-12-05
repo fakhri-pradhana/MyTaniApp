@@ -119,14 +119,12 @@ public class Login extends AppCompatActivity {
                     Log.d(TAG, "signInWithEmail:success");
 //                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //                    getUserProfileData(currentFirebaseUser.getUid());
+                    startActivity(new Intent(Login.this, NavigationBar.class));
                     et_logEmail.getEditText().setText("");
                     et_logPassword.getEditText().setText("");
-                    startActivity(new Intent(Login.this, NavigationBar.class));
 
                 } else {
                     // If sign in fails, display a message to the user.
-                    et_logEmail.getEditText().setText("");
-                    et_logPassword.getEditText().setText("");
                     Log.w(TAG, "signInWithEmail:failure", task.getException());
                     Toast.makeText(Login.this, "Gagal untuk login",
                             Toast.LENGTH_SHORT).show();
