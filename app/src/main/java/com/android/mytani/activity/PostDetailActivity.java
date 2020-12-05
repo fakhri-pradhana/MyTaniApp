@@ -105,12 +105,12 @@ public class PostDetailActivity extends AppCompatActivity {
 
         postKey = getIntent().getStringExtra("postKey");
 
+        String uid = getIntent().getExtras().getString("userId");
         String date = timeStampToString(getIntent().getExtras().getLong("postDate"));
-        showDateName(date);
+        showDateName(date, uid);
     }
 
-    private void showDateName(String date){
-        String uid = currentUser.getUid();
+    private void showDateName(String date, String uid){
         DatabaseReference userRef = firebaseDatabase.getReference("users");
 
         Query getUser = userRef.orderByChild(uid);

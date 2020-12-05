@@ -72,6 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                     postDetailActivity.putExtra("description", mData.get(position).getDescription());
                     postDetailActivity.putExtra("postKey", mData.get(position).getPostKey());
                     postDetailActivity.putExtra("userPhoto", mData.get(position).getUserPhoto());
+                    postDetailActivity.putExtra("userId", mData.get(position).getUserId());
                     // todo get username from data post
 
                     long timestamp = (long) mData.get(position).getTimeStamp();
