@@ -98,34 +98,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_detail_description" />
 
-        <EditText
-            android:id="@+id/et_detailPost_comment"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_comment"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:background="@drawable/rounded_et_comment"
-            android:ems="10"
             android:hint="Masukkan komentar"
-            android:inputType="textPersonName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintBottom_toBottomOf="@+id/iv_detailPost_currentUser"
-            app:layout_constraintEnd_toStartOf="@+id/btn_detailPost_addComment"
             app:layout_constraintStart_toEndOf="@+id/iv_detailPost_currentUser"
-            app:layout_constraintTop_toTopOf="@+id/iv_detailPost_currentUser" />
+            app:layout_constraintTop_toTopOf="@+id/iv_detailPost_currentUser">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_detailPost_addComment"
             android:layout_width="47dp"
             android:layout_height="47dp"
-            android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/rounded_button"
+            android:onClick="submitComment"
             android:text="+"
-            app:layout_constraintBottom_toBottomOf="@+id/et_detailPost_comment"
+            app:layout_constraintBottom_toBottomOf="@+id/til_comment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/et_detailPost_comment"
-            app:layout_constraintTop_toTopOf="@+id/et_detailPost_comment"
-            app:layout_constraintVertical_bias="0.0"
-            android:onClick="submitComment"/>
+            app:layout_constraintStart_toEndOf="@+id/til_comment"
+            app:layout_constraintTop_toTopOf="@+id/til_comment" />
 
         <ImageView
             android:id="@+id/post_detail_user_img"

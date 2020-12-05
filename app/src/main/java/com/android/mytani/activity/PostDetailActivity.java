@@ -21,6 +21,8 @@ import com.android.mytani.models.Comment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +43,7 @@ public class PostDetailActivity extends AppCompatActivity {
     // layout variables
     ImageView iv_post, iv_userPost, iv_currentUser;
     TextView tv_postDescription, tv_postDateName, tv_postTitle;
-    EditText et_comment;
+    TextInputLayout til_comment;
     Button btn_addComment;
 
     String postKey;
@@ -61,8 +63,8 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
 
         // set the statue bar to transparent
-        Window window = getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+/*        Window window = getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);*/
 
         // initialize firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -78,7 +80,7 @@ public class PostDetailActivity extends AppCompatActivity {
         tv_postDescription = findViewById(R.id.post_detail_description);
         tv_postDateName = findViewById(R.id.post_detail_date_name);
 
-        et_comment = findViewById(R.id.et_detailPost_comment);
+        til_comment = findViewById(R.id.til_comment);
         btn_addComment = findViewById(R.id.btn_detailPost_addComment);
 
         // showing detail data from clicked post via intent
@@ -171,7 +173,7 @@ public class PostDetailActivity extends AppCompatActivity {
     public void submitComment(View view) {
         btn_addComment.setVisibility(View.INVISIBLE);
         DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey).push();
-        String commentContent = et_comment.getText().toString();
+        String commentContent = til_comment.getEditText().getText().toString();
 
         String uid = currentUser.getUid();
         String uname = username;
@@ -184,7 +186,7 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 showToast("Komentar berhasil ditambahkan");
-                et_comment.setText("");
+                til_comment.getEditText().setText("");
                 btn_addComment.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
