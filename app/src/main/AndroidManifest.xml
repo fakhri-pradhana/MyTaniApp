@@ -21,7 +21,6 @@
         <activity android:name=".UserProfile" />
         <activity android:name=".activity.Register" />
         <activity android:name=".activity.Login" />
-        <activity android:name=".Beranda" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

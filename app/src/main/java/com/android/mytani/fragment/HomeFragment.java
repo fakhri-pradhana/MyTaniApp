@@ -148,7 +148,11 @@ public class HomeFragment extends Fragment{
         iv_logout = view.findViewById(R.id.iv_logout);
         iv_show_popup = view.findViewById(R.id.iv_show_popup);
 
+        // get photo profile url
+        getUserAvatarUrl();
+
         // MENAMBAHKAN FORUM DENGAN POPUP
+
         // initialize popup
         inipopup();
 
@@ -348,7 +352,7 @@ public class HomeFragment extends Fragment{
                                             autoComplete_popup_category.getText().toString(),
                                             imageDownloadLink,
                                             currentUser.getUid(),
-                                            getUserAvatarUrl());
+                                            imageAvatarUri);
 
                                     // finally add post to firebase database
                                     addPost(post);
@@ -376,7 +380,7 @@ public class HomeFragment extends Fragment{
 
     }
 
-    private String getUserAvatarUrl() {
+    private void getUserAvatarUrl() {
 
         // initialize firebase storage
         StorageReference mStorageRef;
@@ -390,8 +394,6 @@ public class HomeFragment extends Fragment{
                 imageAvatarUri = uri.toString();
             }
         });
-
-        return imageAvatarUri;
     }
 
     private void addPost(Post post) {

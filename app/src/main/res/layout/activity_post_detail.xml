@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".activity.PostDetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +65,7 @@
             android:textColor="@color/accent_orange"
             android:fontFamily="@font/poppins_medium"
             android:text="@string/detailPost_dummyDateName"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,38 +88,52 @@
             app:layout_constraintTop_toBottomOf="@+id/post_detail_date_name" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/iv_detailPost_currentUser"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_detail_description"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintTop_toBottomOf="@+id/post_detail_description" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
+            android:id="@+id/et_detailPost_comment"
+            android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:background="@drawable/rounded_et_comment"
             android:ems="10"
+            android:hint="Masukkan komentar"
             android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_detailPost_currentUser"
+            app:layout_constraintEnd_toStartOf="@+id/btn_detailPost_addComment"
+            app:layout_constraintStart_toEndOf="@+id/iv_detailPost_currentUser"
+            app:layout_constraintTop_toTopOf="@+id/iv_detailPost_currentUser" />
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:text="add"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            android:id="@+id/btn_detailPost_addComment"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="+"
+            app:layout_constraintBottom_toBottomOf="@+id/et_detailPost_comment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+            app:layout_constraintStart_toEndOf="@+id/et_detailPost_comment"
+            app:layout_constraintTop_toTopOf="@+id/et_detailPost_comment"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/post_detail_user_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/post_detail_date_name"
+            app:layout_constraintStart_toEndOf="@+id/post_detail_date_name"
+            app:layout_constraintTop_toTopOf="@+id/post_detail_date_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -274,6 +274,7 @@ public class ProfileFragment extends Fragment {
         String userId = firebaseAuth.getUid();
         DatabaseReference reference = firebaseDatabase.getReference("users");
 
+
         Query getUser = reference.orderByChild(userId);
         getUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
