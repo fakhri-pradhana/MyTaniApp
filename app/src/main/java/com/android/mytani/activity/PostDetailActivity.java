@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.mytani.R;
+import com.android.mytani.models.Comment;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,7 +53,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     // get data user
     Uri imageAvatarUri;
-    String username;
+    private String username="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,11 @@ public class PostDetailActivity extends AppCompatActivity {
         et_comment = findViewById(R.id.et_detailPost_comment);
         btn_addComment = findViewById(R.id.btn_detailPost_addComment);
 
+        // showing detail data from clicked post via intent
+        showPostDetailData();
+    }
+
+    private void showPostDetailData() {
         // get post data via intent from PostAdapter
         String postImage = getIntent().getExtras().getString("postImage");
         Glide.with(this).load(postImage).into(iv_post);
@@ -97,14 +104,10 @@ public class PostDetailActivity extends AppCompatActivity {
         postKey = getIntent().getStringExtra("postKey");
 
         String date = timeStampToString(getIntent().getExtras().getLong("postDate"));
-        // todo get username from database and bikin nama bulan
-        getUsernamePost();
-        tv_postDateName.setText(date + " | oleh @" + username);
-
-
-        // bind data to view
+        showDateName(date);
     }
-    private void getUsernamePost(){
+
+    private void showDateName(String date){
         String uid = currentUser.getUid();
         DatabaseReference userRef = firebaseDatabase.getReference("users");
 
@@ -112,7 +115,8 @@ public class PostDetailActivity extends AppCompatActivity {
         getUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                username = snapshot.child(uid).child("username").getValue(String.class);
+                username = snapshot.child(uid).child("name").getValue(String.class);
+                tv_postDateName.setText(date + " | oleh @" + username);
             }
 
             @Override
@@ -121,6 +125,11 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showLog(String tag, String msg) {
+        Log.d(tag,msg);
+    }
+
     private String timeStampToString (long time){
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
@@ -141,6 +150,7 @@ public class PostDetailActivity extends AppCompatActivity {
         imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+                imageAvatarUri = uri;
                 Picasso.get()
                         .load(uri)
                         .into(iv_currentUser);
@@ -157,4 +167,32 @@ public class PostDetailActivity extends AppCompatActivity {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
+    // handle user onclick on btn add comment
+    public void submitComment(View view) {
+        btn_addComment.setVisibility(View.INVISIBLE);
+        DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey).push();
+        String commentContent = et_comment.getText().toString();
+
+        String uid = currentUser.getUid();
+        String uname = username;
+        String uimg = imageAvatarUri.toString();
+        int upvote = 0;
+        int devote = 0;
+        Comment comment = new Comment(commentContent, uid, uimg, uname, upvote, devote);
+
+        commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                showToast("Komentar berhasil ditambahkan");
+                et_comment.setText("");
+                btn_addComment.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast("Komentar gagal ditambahkan" + e.getMessage());
+            }
+        });
+
+    }
 }
