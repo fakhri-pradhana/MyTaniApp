@@ -2,6 +2,8 @@ package com.android.mytani.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.mytani.R;
+import com.android.mytani.adapter.CommentAdapter;
 import com.android.mytani.models.Comment;
+import com.android.mytani.models.Post;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,27 +39,35 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class PostDetailActivity extends AppCompatActivity {
 
     // layout variables
-    ImageView iv_post, iv_userPost, iv_currentUser;
-    TextView tv_postDescription, tv_postDateName, tv_postTitle;
-    TextInputLayout til_comment;
-    Button btn_addComment;
+    private ImageView iv_post, iv_userPost, iv_currentUser;
+    private TextView tv_postDescription, tv_postDateName, tv_postTitle;
+    private TextInputLayout til_comment;
+    private Button btn_addComment;
+    private RecyclerView rv_comment;
 
     String postKey;
+    List<Comment> listComment;
+
+    // adapter
+    private CommentAdapter commentAdapter;
 
     // firebase variables
-    FirebaseAuth firebaseAuth;
-    FirebaseUser currentUser;
-    FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+    private FirebaseDatabase firebaseDatabase;
 
     // get data user
-    Uri imageAvatarUri;
-    private String username="";
+    private Uri imageAvatarUri;
+    private String postUsername="";
+    private String currentUsername="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +84,7 @@ public class PostDetailActivity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         // initialize Views
+        rv_comment = findViewById(R.id.rv_comment);
         iv_post = findViewById(R.id.post_detail_img);
         iv_userPost = findViewById(R.id.post_detail_user_img);
         iv_currentUser = findViewById(R.id.iv_detailPost_currentUser);
@@ -83,8 +96,35 @@ public class PostDetailActivity extends AppCompatActivity {
         til_comment = findViewById(R.id.til_comment);
         btn_addComment = findViewById(R.id.btn_detailPost_addComment);
 
+        // get current username
+        getCurrentUserName();
         // showing detail data from clicked post via intent
         showPostDetailData();
+        
+        // initialize recyclerview comment
+        showComment();
+    }
+
+    private void showComment() {
+        rv_comment.setLayoutManager(new LinearLayoutManager(this));
+        DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey);
+        commentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listComment = new ArrayList<>();
+                for (DataSnapshot snap : snapshot.getChildren()){
+                    Comment comment = snap.getValue(Comment.class);
+                    listComment.add(comment);
+                }
+                commentAdapter = new CommentAdapter(getApplicationContext(),listComment);
+                rv_comment.setAdapter(commentAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void showPostDetailData() {
@@ -105,20 +145,21 @@ public class PostDetailActivity extends AppCompatActivity {
 
         postKey = getIntent().getStringExtra("postKey");
 
-        String uid = getIntent().getExtras().getString("userId");
+        String postUuid = getIntent().getExtras().getString("userId");
         String date = timeStampToString(getIntent().getExtras().getLong("postDate"));
-        showDateName(date, uid);
+        showPostDateName(date, postUuid);
     }
 
-    private void showDateName(String date, String uid){
+    private void showPostDateName(String date, String uid){
+        // this method showing name and date from post data
         DatabaseReference userRef = firebaseDatabase.getReference("users");
 
         Query getUser = userRef.orderByChild(uid);
         getUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                username = snapshot.child(uid).child("name").getValue(String.class);
-                tv_postDateName.setText(date + " | oleh @" + username);
+                postUsername = snapshot.child(uid).child("name").getValue(String.class);
+                tv_postDateName.setText(date + " | oleh @" + postUsername);
             }
 
             @Override
@@ -139,8 +180,8 @@ public class PostDetailActivity extends AppCompatActivity {
         String date = DateFormat.format("dd-MM-yyyy", calendar).toString();
 
         return date;
-
     }
+
     private void showCurrentUserPhoto(){
 
         // initialize firebase storage
@@ -174,12 +215,13 @@ public class PostDetailActivity extends AppCompatActivity {
         if (til_comment.getEditText().getText().toString().isEmpty()){
             showToast("Silakan masukkan komentar");
         } else {
+            getCurrentUserName();
             btn_addComment.setVisibility(View.INVISIBLE);
             DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey).push();
             String commentContent = til_comment.getEditText().getText().toString();
 
             String uid = currentUser.getUid();
-            String uname = username;
+            String uname = currentUsername;
             String uimg = imageAvatarUri.toString();
             int upvote = 0;
             int devote = 0;
@@ -189,6 +231,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Void aVoid) {
                     showToast("Komentar berhasil ditambahkan");
+                    showLog("INI USERNAME COMMENT", currentUsername);
                     til_comment.getEditText().setText("");
                     btn_addComment.setVisibility(View.VISIBLE);
                 }
@@ -199,5 +242,24 @@ public class PostDetailActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void getCurrentUserName() {
+        DatabaseReference userRef = firebaseDatabase.getReference("users");
+        String uid = currentUser.getUid();
+
+        Query getUser = userRef.orderByChild(uid);
+        getUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                currentUsername = snapshot.child(uid).child("name").getValue(String.class);
+                showLog("INI USERNAME COMMENT", currentUsername);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/comment_user_img"
+    android:id="@+id/comment_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="24dp">
@@ -10,16 +10,18 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
+        android:elevation="18dp"
+        app:cardBackgroundColor="#D8DAD9"
         app:cardCornerRadius="8dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/comment_user_photo"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +36,7 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Fakhri Ilham"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/comment_user_photo"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -43,11 +45,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/poppins"
                 android:lineSpacingExtra="2dp"
                 android:text="@string/long_lorem"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/comment_user_photo"
                 app:layout_constraintTop_toBottomOf="@+id/comment_time" />
 
             <TextView
@@ -58,11 +61,11 @@
                 android:layout_marginTop="3dp"
                 android:text="8.24 AM"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/comment_user_photo"
                 app:layout_constraintTop_toBottomOf="@+id/comment_username" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tv_count_vote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -70,19 +73,21 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="2 Orang terbantu"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintBottom_toBottomOf="@+id/iv_vote"
+                app:layout_constraintEnd_toStartOf="@+id/iv_vote"
+                app:layout_constraintTop_toTopOf="@+id/iv_vote" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/iv_vote"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/ic_heart"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/comment_content"
-                app:srcCompat="@drawable/ic_heart"
                 app:tint="@color/primary_dark_green" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
