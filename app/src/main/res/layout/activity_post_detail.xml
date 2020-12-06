@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,118 +8,150 @@
     android:background="@color/white"
     tools:context=".activity.PostDetailActivity">
 
+    <ScrollView
+        android:id="@+id/sv_detail_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/post_detail_img"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <TextView
+                android:id="@+id/post_detail_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:lineSpacingExtra="4dp"
+                android:text="Ini Judul"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_detail_img" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="#2e2e2e"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_detail_title" />
+
+            <TextView
+                android:id="@+id/post_detail_date_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/detailPost_dummyDateName"
+                android:textColor="@color/accent_orange"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view" />
+
+            <ImageView
+                android:id="@+id/post_detail_user_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/post_detail_date_name"
+                app:layout_constraintStart_toEndOf="@+id/post_detail_date_name"
+                app:layout_constraintTop_toTopOf="@+id/post_detail_date_name" />
+
+            <TextView
+                android:id="@+id/post_detail_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/poppins_medium"
+                android:lineSpacingExtra="4dp"
+                android:text="@string/long_lorem"
+                android:textColor="#373737"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_detail_date_name" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/post_detail_description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <ImageView
-            android:id="@+id/post_detail_img"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
-        <TextView
-            android:id="@+id/post_detail_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:lineSpacingExtra="4dp"
-            android:text="Ini Judul"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_detail_img" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="#2e2e2e"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_detail_title" />
-
-        <TextView
-            android:id="@+id/post_detail_date_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:textColor="@color/accent_orange"
-            android:fontFamily="@font/poppins_medium"
-            android:text="@string/detailPost_dummyDateName"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
-
-        <TextView
-            android:id="@+id/post_detail_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:fontFamily="@font/poppins_medium"
-            android:lineSpacingExtra="4dp"
-            android:text="@string/long_lorem"
-            android:textColor="#373737"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_detail_date_name" />
-
-        <ImageView
-            android:id="@+id/iv_detailPost_currentUser"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/post_detail_description" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sv_detail_post"
+        android:layout_alignParentBottom="true">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_comment"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:hint="Masukkan komentar"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintBottom_toBottomOf="@+id/iv_detailPost_currentUser"
             app:layout_constraintStart_toEndOf="@+id/iv_detailPost_currentUser"
             app:layout_constraintTop_toTopOf="@+id/iv_detailPost_currentUser">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/iv_detailPost_currentUser"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_detailPost_addComment"
             android:layout_width="47dp"
             android:layout_height="47dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/rounded_button"
             android:onClick="submitComment"
             android:text="+"
@@ -127,16 +159,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/til_comment"
             app:layout_constraintTop_toTopOf="@+id/til_comment" />
-
-        <ImageView
-            android:id="@+id/post_detail_user_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/post_detail_date_name"
-            app:layout_constraintStart_toEndOf="@+id/post_detail_date_name"
-            app:layout_constraintTop_toTopOf="@+id/post_detail_date_name" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>
