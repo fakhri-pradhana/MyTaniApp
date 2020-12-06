@@ -171,30 +171,33 @@ public class PostDetailActivity extends AppCompatActivity {
 
     // handle user onclick on btn add comment
     public void submitComment(View view) {
-        btn_addComment.setVisibility(View.INVISIBLE);
-        DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey).push();
-        String commentContent = til_comment.getEditText().getText().toString();
+        if (til_comment.getEditText().getText().toString().isEmpty()){
+            showToast("Silakan masukkan komentar");
+        } else {
+            btn_addComment.setVisibility(View.INVISIBLE);
+            DatabaseReference commentRef = firebaseDatabase.getReference("comments").child(postKey).push();
+            String commentContent = til_comment.getEditText().getText().toString();
 
-        String uid = currentUser.getUid();
-        String uname = username;
-        String uimg = imageAvatarUri.toString();
-        int upvote = 0;
-        int devote = 0;
-        Comment comment = new Comment(commentContent, uid, uimg, uname, upvote, devote);
+            String uid = currentUser.getUid();
+            String uname = username;
+            String uimg = imageAvatarUri.toString();
+            int upvote = 0;
+            int devote = 0;
+            Comment comment = new Comment(commentContent, uid, uimg, uname, upvote, devote);
 
-        commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                showToast("Komentar berhasil ditambahkan");
-                til_comment.getEditText().setText("");
-                btn_addComment.setVisibility(View.VISIBLE);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                showToast("Komentar gagal ditambahkan" + e.getMessage());
-            }
-        });
-
+            commentRef.setValue(comment).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    showToast("Komentar berhasil ditambahkan");
+                    til_comment.getEditText().setText("");
+                    btn_addComment.setVisibility(View.VISIBLE);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    showToast("Komentar gagal ditambahkan" + e.getMessage());
+                }
+            });
+        }
     }
 }
