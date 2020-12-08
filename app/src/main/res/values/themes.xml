@@ -14,4 +14,9 @@
         <!-- Customize your theme here. -->
 
     </style>
+
+    <style name="AppBarLayoutTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlNormal">@color/primary_dark_green</item>
+        <item name="titleTextColor">@color/primary_dark_green</item>
+    </style>
 </resources>

@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -31,12 +32,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.android.mytani.activity.CategoryActivity;
 import com.android.mytani.activity.MainActivity;
 import com.android.mytani.R;
+import com.android.mytani.activity.PostDetailActivity;
 import com.android.mytani.adapter.PostAdapter;
 import com.android.mytani.models.Post;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -88,6 +92,7 @@ public class HomeFragment extends Fragment{
     TextView et_popup_title, et_popup_description;
     ProgressBar popup_progressbar;
     AutoCompleteTextView autoComplete_popup_category;
+    RelativeLayout rl_cat_fruit_btn, rl_cat_veggie_btn, rl_cat_seed_btn, rl_cat_tree_btn;
 
     // define forum category :
     private final String[] option_category = {"Buah", "Sayur", "Kacang", "Pohon"};
@@ -104,25 +109,6 @@ public class HomeFragment extends Fragment{
 
     public HomeFragment() {
         // Required empty public constructor
-    }
-
-/*    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
     }
 
     @Override
@@ -148,11 +134,46 @@ public class HomeFragment extends Fragment{
         iv_logout = view.findViewById(R.id.iv_logout);
         iv_show_popup = view.findViewById(R.id.iv_show_popup);
 
+        rl_cat_fruit_btn = view.findViewById(R.id.rl_cat_fruit_btn);
+        rl_cat_seed_btn = view.findViewById(R.id.rl_cat_seed_btn);
+        rl_cat_veggie_btn = view.findViewById(R.id.rl_cat_veggie_btn);
+        rl_cat_tree_btn = view.findViewById(R.id.rl_cat_tree_btn);
+
+        Intent intentCatActivity = new Intent(getActivity(), CategoryActivity.class);
+        rl_cat_fruit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentCatActivity.putExtra("cat", "fruit");
+                startActivity(intentCatActivity);
+            }
+        });
+        rl_cat_seed_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentCatActivity.putExtra("cat", "seed");
+                startActivity(intentCatActivity);
+            }
+        });
+        rl_cat_veggie_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentCatActivity.putExtra("cat", "veggie");
+                startActivity(intentCatActivity);
+            }
+        });
+        rl_cat_tree_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intentCatActivity.putExtra("cat", "tree");
+                startActivity(intentCatActivity);
+            }
+        });
+
+
         // get photo profile url
         getUserAvatarUrl();
 
         // MENAMBAHKAN FORUM DENGAN POPUP
-
         // initialize popup
         inipopup();
 
@@ -176,6 +197,7 @@ public class HomeFragment extends Fragment{
 
         return view;
     }
+
 
     @Override
     public void onStart() {

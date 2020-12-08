@@ -39,7 +39,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tv_title.setText(mData.get(position).getTitle());
-        Glide.with(context).load(mData.get(position).getPicture()).into(holder.iv_imgPost);
+        Glide.with(context)
+                .load(mData.get(position).getPicture())
+//                .placeholder(circularProgressDrawable)
+                .into(holder.iv_imgPost);
         Glide.with(context).load(mData.get(position).getUserPhoto()).into(holder.img_postProfile);
 
 

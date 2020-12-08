@@ -4,13 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.android.mytani.R;
-import com.android.mytani.activity.MainActivity;
-import com.android.mytani.fragment.DiscoverFragment;
+import com.android.mytani.fragment.discover.DiscoverFragment;
 import com.android.mytani.fragment.HomeFragment;
 import com.android.mytani.fragment.ProfileFragment;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -68,22 +66,5 @@ public class NavigationBar extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void showAllDataProfile(Fragment profilefragment) {
-        Intent intent = getIntent();
-        String getUsername = intent.getStringExtra("username");
-        String getFullName = intent.getStringExtra("name");
-        String getEmail = intent.getStringExtra("email");
-        String getPhoneNo = intent.getStringExtra("phoneNo");
-        String getPassword = intent.getStringExtra("password");
-
-        Bundle bundle = new Bundle();
-        bundle.putString("username", getUsername);
-        bundle.putString("name", getFullName);
-        bundle.putString("email", getEmail);
-        bundle.putString("phoneNo", getPhoneNo);
-        bundle.putString("password", getPassword);
-        profilefragment.setArguments(bundle);
     }
 }
