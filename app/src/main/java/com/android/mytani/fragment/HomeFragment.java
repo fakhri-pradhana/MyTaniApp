@@ -238,7 +238,9 @@ public class HomeFragment extends Fragment{
                     public void onClick(DialogInterface dialog,int id) {
                         // jika tombol diklik, maka akan signout dan kembali ke splash screen
                         FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(getActivity(), MainActivity.class));
+                        Intent intentToSignout = new Intent(getActivity(), MainActivity.class);
+                        intentToSignout.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK + Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intentToSignout);
                     }
                 })
                 .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {

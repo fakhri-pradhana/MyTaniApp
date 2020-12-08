@@ -117,9 +117,9 @@ public class Login extends AppCompatActivity {
                 if (task.isSuccessful()){
                     // todo hapus text
                     Log.d(TAG, "signInWithEmail:success");
-//                    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//                    getUserProfileData(currentFirebaseUser.getUid());
-                    startActivity(new Intent(Login.this, NavigationBar.class));
+                    Intent intentToApp = new Intent(Login.this, NavigationBar.class);
+                    intentToApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK + Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intentToApp);
                     et_logEmail.getEditText().setText("");
                     et_logPassword.getEditText().setText("");
 
