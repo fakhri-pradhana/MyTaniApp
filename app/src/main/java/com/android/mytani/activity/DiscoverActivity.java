@@ -1,55 +1,45 @@
-package com.android.mytani.fragment.discover;
+package com.android.mytani.activity;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.android.mytani.R;
-import com.android.mytani.activity.NavigationBar;
 import com.android.mytani.adapter.TabDiscoverAdapter;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+public class DiscoverActivity extends AppCompatActivity {
 
-public class DiscoverFragment extends Fragment{
+    // layout variables
 
     ViewPager mPager;
     TabLayout mTabLayout;
     TabItem item_forum, item_news, item_price;
     TabDiscoverAdapter tabDiscoverAdapter;
-
-    public DiscoverFragment() {
-    }
-
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_discover, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_discover);
 
-        Log.d("fragment discover", "ini dari fragment");
+        androidx.appcompat.widget.Toolbar mToolbar = findViewById(R.id.toolbar_discovery);
+        setSupportActionBar(mToolbar);
 
-        Toolbar mToolbar = view.findViewById(R.id.toolbar_discovery);
-        ((NavigationBar) getActivity()).setSupportActionBar(mToolbar);
+        mPager = findViewById(R.id.viewpager_discovery);
+        mTabLayout = findViewById(R.id.tablayout_discover);
+        item_forum = findViewById(R.id.tab_forum);
+        item_news = findViewById(R.id.tab_news);
+        item_price = findViewById(R.id.tab_price);
 
-        mPager = view.findViewById(R.id.viewpager_discovery);
-        mTabLayout = view.findViewById(R.id.tablayout_discover);
-        item_forum = view.findViewById(R.id.tab_forum);
-        item_news = view.findViewById(R.id.tab_news);
-        item_price = view.findViewById(R.id.tab_price);
-
+        Log.d("INI DISCOVER", "INI BISA");
         tabDiscoverAdapter = new TabDiscoverAdapter(
-                ((NavigationBar) getActivity()).getSupportFragmentManager(),
+                getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
                 mTabLayout.getTabCount()
         );
@@ -74,6 +64,6 @@ public class DiscoverFragment extends Fragment{
         });
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
-        return view;
     }
+
 }
