@@ -18,9 +18,9 @@ public class TabDiscoverAdapter extends FragmentPagerAdapter {
     private int tabsNumber;
 
 
-    public TabDiscoverAdapter(@NonNull FragmentManager fm, int behavior, int tabs) {
-        super(fm, behavior);
-        this.tabsNumber = tabs;
+    public TabDiscoverAdapter(@NonNull FragmentManager fm, int tabsNumber) {
+        super(fm);
+        this.tabsNumber = tabsNumber;
     }
 
     @NonNull
@@ -36,7 +36,7 @@ public class TabDiscoverAdapter extends FragmentPagerAdapter {
             case 2:
                 showLog("FRAGMENT PRICE");
                 return new DiscoverPriceFragment();
-            default: return new DiscoverForumFragment();
+            default: return new DiscoverPriceFragment();
 
         }
     }

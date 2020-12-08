@@ -28,8 +28,8 @@ public class DiscoverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_discover);
 
-        androidx.appcompat.widget.Toolbar mToolbar = findViewById(R.id.toolbar_discovery);
-        setSupportActionBar(mToolbar);
+//        androidx.appcompat.widget.Toolbar mToolbar = findViewById(R.id.toolbar_discovery);
+//        setSupportActionBar(mToolbar);
 
         mPager = findViewById(R.id.viewpager_discovery);
         mTabLayout = findViewById(R.id.tablayout_discover);
@@ -39,9 +39,7 @@ public class DiscoverActivity extends AppCompatActivity {
 
         Log.d("INI DISCOVER", "INI BISA");
         tabDiscoverAdapter = new TabDiscoverAdapter(
-                getSupportFragmentManager(),
-                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
-                mTabLayout.getTabCount()
+                getSupportFragmentManager(), mTabLayout.getTabCount()
         );
 
         mPager.setAdapter(tabDiscoverAdapter);

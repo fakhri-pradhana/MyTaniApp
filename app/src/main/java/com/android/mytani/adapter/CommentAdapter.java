@@ -42,6 +42,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         holder.tv_name.setText(mData.get(position).getUname());
         holder.tv_content.setText(mData.get(position).getContent());
         holder.tv_time.setText(timeStampToString((long) mData.get(position).getTimestamp()));
+//        holder.tv_voteCount.setText(mData.get(position).getUpvote());
 
     }
 
