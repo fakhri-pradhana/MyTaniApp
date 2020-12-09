@@ -40,6 +40,17 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="10dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Berita Teratas"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="17sp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recylerView"
                 android:scrollbars="vertical"
