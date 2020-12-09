@@ -23,6 +23,8 @@ public class DiscoverNewsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_discover_news, container, false);
+        View view = inflater.inflate(R.layout.fragment_discover_news, container, false);
+
+        return view;
     }
 }

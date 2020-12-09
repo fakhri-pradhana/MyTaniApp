@@ -41,10 +41,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         holder.tv_title.setText(mData.get(position).getTitle());
         Glide.with(context)
                 .load(mData.get(position).getPicture())
-//                .placeholder(circularProgressDrawable)
+                .placeholder(R.drawable.ic_load_image)
                 .into(holder.iv_imgPost);
         Glide.with(context).load(mData.get(position).getUserPhoto()).into(holder.img_postProfile);
-
 
     }
 
@@ -65,6 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             img_postProfile = itemView.findViewById(R.id.row_post_profile_img);
 
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     Intent postDetailActivity = new Intent(context, PostDetailActivity.class);

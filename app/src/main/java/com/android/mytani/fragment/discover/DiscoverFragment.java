@@ -4,7 +4,9 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
@@ -37,10 +39,8 @@ public class DiscoverFragment extends Fragment{
     public void onStart() {
         super.onStart();
         Log.d("fragment discover", "onstart");
-        tabDiscoverAdapter = new TabDiscoverAdapter(
-                ((NavigationBar) getActivity()).getSupportFragmentManager(),
-                mTabLayout.getTabCount()
-        );
+        FragmentManager fm = getChildFragmentManager();
+        tabDiscoverAdapter = new TabDiscoverAdapter(fm, mTabLayout.getTabCount());
 
         mPager.setAdapter(tabDiscoverAdapter);
 
