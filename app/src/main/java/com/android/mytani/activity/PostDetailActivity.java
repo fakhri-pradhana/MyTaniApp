@@ -129,24 +129,26 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void showPostDetailData() {
         // get post data via intent from PostAdapter
-        String postImage = getIntent().getExtras().getString("postImage");
-        Glide.with(this).load(postImage).into(iv_post);
+        Post post = (Post) getIntent().getSerializableExtra("Post");
 
-        String postTitle = getIntent().getStringExtra("title");
+        String image = post.getPicture();
+        Glide.with(this).load(image).into(iv_post);
+
+        String postTitle = post.getTitle();
         tv_postTitle.setText(postTitle);
 
-        String userPostImage = getIntent().getExtras().getString("userPhoto");
+        String userPostImage = post.getUserPhoto();
         Glide.with(this).load(userPostImage).into(iv_userPost);
 
-        String postDescription = getIntent().getStringExtra("description");
+        String postDescription = post.getDescription();
         tv_postDescription.setText(postDescription);
 
         showCurrentUserPhoto();
 
-        postKey = getIntent().getStringExtra("postKey");
+        postKey = post.getPostKey();
 
-        String postUuid = getIntent().getExtras().getString("userId");
-        String date = timeStampToString(getIntent().getExtras().getLong("postDate"));
+        String postUuid = post.getUserId();
+        String date = timeStampToString((long) post.getTimeStamp());
         showPostDateName(date, postUuid);
     }
 

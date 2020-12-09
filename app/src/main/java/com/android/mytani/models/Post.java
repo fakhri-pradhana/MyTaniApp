@@ -2,7 +2,11 @@ package com.android.mytani.models;
 
 import com.google.firebase.database.ServerValue;
 
-public class Post {
+import java.io.Serializable;
+
+public class Post implements Serializable {
+
+
 
     private String postKey;
     private String title;
@@ -16,6 +20,7 @@ public class Post {
     public Post() {
         // EMPTY CONST
     }
+
 
     public Post(String title, String description, String category, String picture, String userId, String userPhoto) {
         this.title = title;

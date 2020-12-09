@@ -53,17 +53,26 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public class CommentViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView iv_user;
+        ImageView iv_user, iv_vote;
         TextView tv_name, tv_content, tv_time, tv_voteCount;
 
         public CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             // initialize layout variable
             iv_user = itemView.findViewById(R.id.comment_user_photo);
+            iv_vote = itemView.findViewById(R.id.iv_vote);
             tv_name = itemView.findViewById(R.id.comment_username);
             tv_content = itemView.findViewById(R.id.comment_content);
             tv_time = itemView.findViewById(R.id.comment_time);
             tv_voteCount = itemView.findViewById(R.id.tv_count_vote);
+
+            iv_vote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getLayoutPosition();
+                    // todo fitur vote bakal ada disini
+                }
+            });
         }
     }
     private String timeStampToString (long time){

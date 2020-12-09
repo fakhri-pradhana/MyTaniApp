@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,16 +18,20 @@ import com.android.mytani.activity.PostDetailActivity;
 import com.android.mytani.models.Post;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> {
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> implements Filterable {
 
     Context context;
     List<Post> mData;
+    List<Post> mDataAll;
 
     public PostAdapter(Context context, List<Post> mData) {
         this.context = context;
         this.mData = mData;
+        this.mDataAll = new ArrayList<>(mData);
     }
 
     @NonNull
@@ -52,6 +58,43 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
         return mData.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+
+    }
+
+    Filter filter = new Filter() {
+        // run on background thread
+        // created otomatis
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            List<Post> filteredPost = new ArrayList<>();
+            if (constraint.toString().isEmpty()){
+                filteredPost.addAll(mDataAll);
+            }else {
+                for (Post post : mDataAll){
+                    if (post.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filteredPost.add(post);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredPost;
+
+            return filterResults;
+        }
+
+        // runs on a ui thread
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mData.clear();
+            mData.addAll((Collection<? extends Post>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_title;
@@ -68,14 +111,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent postDetailActivity = new Intent(context, PostDetailActivity.class);
-                    int position = getAdapterPosition();
+                    int position = getLayoutPosition();
 
-                    postDetailActivity.putExtra("title", mData.get(position).getTitle());
+                    postDetailActivity.putExtra("Post", mData.get(position));
+
+                    /*postDetailActivity.putExtra("title", mData.get(position).getTitle());
                     postDetailActivity.putExtra("postImage", mData.get(position).getPicture());
                     postDetailActivity.putExtra("description", mData.get(position).getDescription());
                     postDetailActivity.putExtra("postKey", mData.get(position).getPostKey());
                     postDetailActivity.putExtra("userPhoto", mData.get(position).getUserPhoto());
-                    postDetailActivity.putExtra("userId", mData.get(position).getUserId());
+                    postDetailActivity.putExtra("userId", mData.get(position).getUserId());*/
                     // todo get username from data post
 
                     long timestamp = (long) mData.get(position).getTimeStamp();
