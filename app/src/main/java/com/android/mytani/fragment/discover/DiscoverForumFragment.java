@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,19 +41,20 @@ import java.util.List;
 public class DiscoverForumFragment extends Fragment {
 
     // layout variables
-    TextInputLayout til_search_forumDiscovery;
+    EditText et_search_discoverForum;
     RecyclerView rc_discover_forum;
 
-    // layout variables from row_post
+    String postKey;
 
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference mDatabaseReference;
+    DatabaseReference databasePostReference;
     FirebaseRecyclerOptions<Post> options_post;
     FirebaseRecyclerAdapter<Post, PostViewHolder> post_adapter;
 
     // Post list
     List<Post> postList;
+    List<Post> detailPostList;
 
     public DiscoverForumFragment() {
         // Required empty public constructor
@@ -65,16 +68,19 @@ public class DiscoverForumFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_discover_forum, container, false);
 
         // initialize view
-        til_search_forumDiscovery = view.findViewById(R.id.til_search_forumDiscovery);
+        et_search_discoverForum = view.findViewById(R.id.et_search_discoverForum);
         rc_discover_forum = view.findViewById(R.id.rc_discover_forum);
 
         // reycclerview
         rc_discover_forum.setLayoutManager(new LinearLayoutManager(getActivity()));
         rc_discover_forum.hasFixedSize();
 
+        // initialize detailPostList
+        detailPostList = new ArrayList<Post>();
+
         // initialize firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = firebaseDatabase.getReference("posts");
+        databasePostReference = firebaseDatabase.getReference("posts");
 
         // load data recyclerview
         loadData();
@@ -88,7 +94,7 @@ public class DiscoverForumFragment extends Fragment {
         super.onStart();
 
         // get list posts from database
-        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+        databasePostReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 postList = new ArrayList<>();
@@ -106,7 +112,7 @@ public class DiscoverForumFragment extends Fragment {
     }
 
     private void loadData() {
-        options_post = new FirebaseRecyclerOptions.Builder<Post>().setQuery(mDatabaseReference, Post.class).build();
+        options_post = new FirebaseRecyclerOptions.Builder<Post>().setQuery(databasePostReference, Post.class).build();
         post_adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options_post) {
             @Override
             protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
@@ -116,6 +122,51 @@ public class DiscoverForumFragment extends Fragment {
                         .placeholder(R.drawable.ic_load_image)
                         .into(holder.iv_imgPost);
                 Picasso.get().load(model.getUserPhoto()).into(holder.img_postProfile);
+
+                holder.v.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        postKey = getRef(position).getKey();
+                        /*showLog(postKey);
+                        intentToDetailPost.putExtra("postKey", postKey);*/
+
+                        // todo get post values from database to a list
+                        databasePostReference.child(postKey);
+                        databasePostReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot snap : snapshot.getChildren()){
+                                    Post post = snap.getValue(Post.class);
+                                    detailPostList.add(post);
+                                }
+                                // todo pass post list values via intent go to PostDetailActivity
+                                Intent intentToDetailPost = new Intent(getActivity(), PostDetailActivity.class);
+
+                                intentToDetailPost.putExtra("title", detailPostList.get(position).getTitle());
+                                intentToDetailPost.putExtra("title", detailPostList.get(position).getTitle());
+                                intentToDetailPost.putExtra("postImage", detailPostList.get(position).getPicture());
+                                intentToDetailPost.putExtra("description", detailPostList.get(position).getDescription());
+                                intentToDetailPost.putExtra("postKey", detailPostList.get(position).getPostKey());
+                                intentToDetailPost.putExtra("userPhoto", detailPostList.get(position).getUserPhoto());
+                                intentToDetailPost.putExtra("userId", detailPostList.get(position).getUserId());
+                                // todo get username from data post
+
+                                long timestamp = (long) detailPostList.get(position).getTimeStamp();
+                                intentToDetailPost.putExtra("postDate", timestamp);
+                                getContext().startActivity(intentToDetailPost);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+                });
             }
 
             @NonNull
@@ -123,17 +174,21 @@ public class DiscoverForumFragment extends Fragment {
             public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_post_item,parent, false);
 
-                return new PostViewHolder(v, postList, getActivity());
+                return new PostViewHolder(v, postList, getActivity(), postKey);
             }
         };
         post_adapter.startListening();
         rc_discover_forum.setAdapter(post_adapter);
     }
 
+    private void showLog(String msg) {
+        Log.d("FRAGMENT DISCOVER FORUM",msg);
+    }
+
 
     private void forumSearch(String searchText){
         String quary  = searchText.toLowerCase();
-        Query searchQuery = mDatabaseReference.orderByChild("title").startAt(quary).endAt(quary+"\uf8ff");
+        Query searchQuery = databasePostReference.orderByChild("title").startAt(quary).endAt(quary+"\uf8ff");
 
     }
 

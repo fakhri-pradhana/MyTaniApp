@@ -6,23 +6,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.discover.DiscoverForumFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_search_forumDiscovery"
-        android:layout_margin="20dp"
+    <EditText
+        android:id="@+id/et_search_discoverForum"
         android:layout_width="match_parent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search"/>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_margin="20dp"
+        android:hint="@string/search"
+        android:drawableRight="@drawable/ic_search_green"
+        android:background="@drawable/rounded_et_search"
+        android:layout_height="45dp"
+
+        />
+
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_discover_forum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/til_search_forumDiscovery"/>
+        android:layout_below="@id/et_search_discoverForum"/>
 
 </RelativeLayout>
