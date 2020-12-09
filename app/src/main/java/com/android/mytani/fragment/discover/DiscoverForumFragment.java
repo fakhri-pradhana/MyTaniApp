@@ -55,6 +55,7 @@ public class DiscoverForumFragment extends Fragment {
 
     public DiscoverForumFragment() {
         // Required empty public constructor
+        // ini coba commit
     }
 
 
