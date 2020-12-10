@@ -56,6 +56,7 @@ public class PostDetailActivity extends AppCompatActivity {
     String postKey;
     List<Comment> listComment;
 
+
     // adapter
     private CommentAdapter commentAdapter;
 
@@ -132,7 +133,10 @@ public class PostDetailActivity extends AppCompatActivity {
         Post post = (Post) getIntent().getSerializableExtra("Post");
 
         String image = post.getPicture();
-        Glide.with(this).load(image).into(iv_post);
+        Glide.with(this)
+                .load(image)
+                .placeholder(R.drawable.ic_load_image)
+                .into(iv_post);
 
         String postTitle = post.getTitle();
         tv_postTitle.setText(postTitle);

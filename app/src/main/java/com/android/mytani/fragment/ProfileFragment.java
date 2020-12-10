@@ -25,6 +25,9 @@ import android.widget.Toast;
 
 import com.android.mytani.R;
 import com.android.mytani.UserHelperClass;
+import com.android.mytani.activity.PostUserActivity;
+import com.android.mytani.adapter.PostAdapter;
+import com.android.mytani.models.Post;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -66,9 +69,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
 
-    // used in onstart method for get profile data and pass it to list
-    private FirebaseDatabase firebaseProfilData;
-    private DatabaseReference profileDataReference;
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -76,22 +76,18 @@ public class ProfileFragment extends Fragment {
     ArrayList<UserHelperClass> listUser = new ArrayList<>();
 
     List<UserHelperClass> userList;
+    List<Post> postList;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        // get profile data from firebase
+        // get post data from database
 
     }
 
@@ -100,6 +96,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // HOOKS FOR PROFILE FRAGMENT
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
 
         showUserProfileData(view);
 
@@ -110,7 +107,8 @@ public class ProfileFragment extends Fragment {
         cv_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "INI ADALAH JML POST", Toast.LENGTH_SHORT).show();
+                Intent intentShowUserPost = new Intent(getActivity(), PostUserActivity.class);
+                startActivity(intentShowUserPost);
             }
         });
 

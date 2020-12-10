@@ -91,32 +91,6 @@ public class DiscoverForumFragment extends Fragment {
         // initialize firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databasePostReference = firebaseDatabase.getReference("posts");
-
-        // load data recyclerview
-//        loadData("");
-
-        // listen to change text to search
-//        et_search_discoverForum.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (s.toString() != null){
-//                    loadData(s.toString());
-//                } else {
-//                    loadData("");
-//                }
-//            }
-//        });
-
         return view;
     }
 
@@ -145,33 +119,6 @@ public class DiscoverForumFragment extends Fragment {
             }
         });
     }
-
-//    private void loadData(String searchData) {
-//
-//        Query query = databasePostReference.orderByChild("title").startAt(searchData).endAt(searchData + "\uf8ff");
-//
-//        options_post = new FirebaseRecyclerOptions.Builder<Post>().setQuery(query, Post.class).build();
-//        post_adapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(options_post) {
-//            @Override
-//            protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull Post model) {
-//                holder.tv_title.setText(model.getTitle());
-//                Glide.with(getContext())
-//                        .load(model.getPicture())
-//                        .placeholder(R.drawable.ic_load_image)
-//                        .into(holder.iv_imgPost);
-//                Picasso.get().load(model.getUserPhoto()).into(holder.img_postProfile);
-//            }
-//            @NonNull
-//            @Override
-//            public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_post_item,parent, false);
-//
-//                return new PostViewHolder(v, postList, getActivity(), postKey);
-//            }
-//        };
-//        post_adapter.startListening();
-//        rc_discover_forum.setAdapter(post_adapter);
-//    }
 
     private void showLog(String msg) {
         Log.d("FRAGMENT DISCOVER FORUM",msg);

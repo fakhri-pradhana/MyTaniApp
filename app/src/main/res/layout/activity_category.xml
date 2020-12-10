@@ -33,28 +33,28 @@
 
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout_discover"
+            android:id="@+id/tablayout_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_forum"
+                android:id="@+id/tab_fruit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Buah" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_news"
+                android:id="@+id/tab_veggie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sayur" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tab_price"
+                android:id="@+id/tab_seed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Harga" />
+                android:text="berbiji" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_tree"
@@ -64,7 +64,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager_discovery"
+            android:id="@+id/viewpager_category"
             android:layout_width="match_parent"
             android:layout_height="fill_parent" />
 

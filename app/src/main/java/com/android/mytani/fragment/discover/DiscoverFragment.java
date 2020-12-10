@@ -38,7 +38,6 @@ public class DiscoverFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        Log.d("fragment discover", "onstart");
         FragmentManager fm = getChildFragmentManager();
         tabDiscoverAdapter = new TabDiscoverAdapter(fm, mTabLayout.getTabCount());
 
