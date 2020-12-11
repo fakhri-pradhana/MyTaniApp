@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment{
     RelativeLayout rl_cat_fruit_btn, rl_cat_veggie_btn, rl_cat_seed_btn, rl_cat_tree_btn;
 
     // define forum category :
-    private final String[] option_category = {"Buah", "Sayur", "Kacang", "Pohon"};
+    private final String[] option_category = {"Buah", "Sayur", "Biji", "Pohon"};
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -320,7 +320,6 @@ public class HomeFragment extends Fragment{
 
         // initialize popup widget
         iv_popup_userAvatar_img = popAddPost.findViewById(R.id.popup_user_avatar);
-        iv_popup_post_img = popAddPost.findViewById(R.id.iv_popup_img);
         iv_popup_post_img = popAddPost.findViewById(R.id.iv_popup_img);
         et_popup_title = popAddPost.findViewById(R.id.et_popup_title);
         et_popup_description = popAddPost.findViewById(R.id.et_popup_description);

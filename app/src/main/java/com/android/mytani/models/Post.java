@@ -6,8 +6,6 @@ import java.io.Serializable;
 
 public class Post implements Serializable {
 
-
-
     private String postKey;
     private String title;
     private String description;
@@ -21,6 +19,17 @@ public class Post implements Serializable {
         // EMPTY CONST
     }
 
+
+    public Post(String postKey, String title, String description, String category, String picture, String userId, String userPhoto) {
+        this.postKey = postKey;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.picture = picture;
+        this.userId = userId;
+        this.userPhoto = userPhoto;
+        this.timeStamp = ServerValue.TIMESTAMP;
+    }
 
     public Post(String title, String description, String category, String picture, String userId, String userPhoto) {
         this.title = title;

@@ -18,7 +18,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/et_popup_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tv_buat_forum"
+        app:layout_constraintStart_toEndOf="@+id/tv_popup_name"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
         tools:srcCompat="@tools:sample/avatars" />
@@ -34,7 +34,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_buat_forum" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_popup_name" />
 
     <EditText
         android:id="@+id/et_popup_description"
@@ -116,7 +116,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_popup_add_btn" />
 
     <TextView
-        android:id="@+id/tv_buat_forum"
+        android:id="@+id/tv_popup_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
