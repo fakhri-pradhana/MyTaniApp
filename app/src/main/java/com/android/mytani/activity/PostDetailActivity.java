@@ -56,6 +56,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -84,7 +85,7 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
     String postKey;
     List<Comment> listComment;
 
-    private Uri pickedImgUri = null;
+    private Uri pickedImgUri = Uri.parse("");
 
     // adapter
     private CommentAdapter commentAdapter;
@@ -195,8 +196,8 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
             // user succes pick an image
             // we need to save its  reference to a Uri variable
             pickedImgUri = data.getData();
+            showLog("ini dari onresult", pickedImgUri.toString());
             iv_popup_post_img.setImageURI(pickedImgUri);
-            Log.d("URI IMAGE  ", pickedImgUri.toString());
 
         }
     }
@@ -455,15 +456,6 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
         popup_progressbar = editPopup.findViewById(R.id.popup_progressbar);
         autoComplete_popup_category = editPopup.findViewById(R.id.autoComplete_popup_category);
 
-        // list of forum categories :
-        ArrayAdapter arrayAdapter = new ArrayAdapter(
-                PostDetailActivity.this,
-                R.layout.option_category_post,
-                option_category);
-
-        // set Adapter for categry
-        autoComplete_popup_category.setAdapter(arrayAdapter);
-
         // FILL POPUP DENGAN CURRENT DATA POST
         // get post data via intent from PostAdapter
         Post post = (Post) getIntent().getSerializableExtra("Post");
@@ -471,7 +463,6 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
         tv_popup_name.setText("Ubah Forum");
 
         String image = post.getPicture();
-        pickedImgUri = Uri.parse(image);
         Glide.with(this)
                 .load(image)
                 .placeholder(R.drawable.ic_load_image)
@@ -484,7 +475,17 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
 
         et_popup_description.setText(post.getDescription());
 
+        // list of forum categories :
+        ArrayAdapter arrayAdapter = new ArrayAdapter(
+                PostDetailActivity.this,
+                R.layout.option_category_post,
+                option_category);
+
+        // category default value
         autoComplete_popup_category.setText(post.getCategory());
+
+        // set Adapter for categry
+        autoComplete_popup_category.setAdapter(arrayAdapter);
 
         iv_popup_addPost_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -508,61 +509,7 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
                 .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         // tombol yes di klik
-                        iv_popup_addPost_btn.setVisibility(View.INVISIBLE);
-                        popup_progressbar.setVisibility(View.VISIBLE);
-
-                        showLog("CEK ET TITLE", et_popup_title.getText().toString());
-
-                        // validate user input
-                        if (!et_popup_title.getText().toString().equals("")
-                                && !et_popup_description.getText().toString().equals("")
-                                && pickedImgUri != null
-                                && !autoComplete_popup_category.getText().toString().equals("")){
-
-
-                            // upload the post image to firebase storage
-                            Post postIntent = (Post) getIntent().getSerializableExtra("Post");
-                            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("image_forum");
-                            StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
-                            imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                    imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            String imageDownloadLink = uri.toString();
-
-                                            // create post object
-                                            Post post = new Post(
-                                                    postIntent.getPostKey(),
-                                                    et_popup_title.getText().toString(),
-                                                    et_popup_description.getText().toString(),
-                                                    autoComplete_popup_category.getText().toString(),
-                                                    imageDownloadLink,
-                                                    currentUser.getUid(),
-                                                    imageAvatar);
-
-                                            // finally add post to firebase database
-                                            updatePost(post);
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            showToast(e.getMessage());
-                                            popup_progressbar.setVisibility(View.INVISIBLE);
-                                            iv_popup_addPost_btn.setVisibility(View.VISIBLE);
-                                        }
-                                    });
-
-                                }
-                            });
-
-                        } else {
-                            showToast("Semua wajib diisi termasuk gambar");
-                            iv_popup_addPost_btn.setVisibility(View.VISIBLE);
-                            popup_progressbar.setVisibility(View.INVISIBLE);
-
-                        }
+                        performEditPost();
                     }
                 })
                 .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
@@ -576,6 +523,85 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
 
         // menampilkan alert dialog
         alertDialog.show();
+    }
+
+    private void performEditPost() {
+        Post postIntent = (Post) getIntent().getSerializableExtra("Post");
+        Uri uploadImage;
+        iv_popup_addPost_btn.setVisibility(View.INVISIBLE);
+        popup_progressbar.setVisibility(View.VISIBLE);
+
+        showLog("CEK ET TITLE", et_popup_title.getText().toString());
+
+
+        // validate user input
+        if (!et_popup_title.getText().toString().equals("")
+                && !et_popup_description.getText().toString().equals("")
+//                && pickedImgUri != null
+                && !autoComplete_popup_category.getText().toString().equals("")){
+
+            // check pickedImgUri
+            if (pickedImgUri.toString().equals("")){
+                // create post object
+                Post post = new Post(
+                        postIntent.getPostKey(),
+                        et_popup_title.getText().toString(),
+                        et_popup_description.getText().toString(),
+                        autoComplete_popup_category.getText().toString(),
+                        postIntent.getPicture(),
+                        currentUser.getUid(),
+                        imageAvatar);
+
+                // upload to firebase
+                updatePost(post);
+            }
+            else
+                {
+                    // upload the new post image to firebase storage
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("image_forum");
+
+                    StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());
+                    imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageDownloadLink = uri.toString();
+
+                                    // create post object
+                                    Post post = new Post(
+                                            postIntent.getPostKey(),
+                                            et_popup_title.getText().toString(),
+                                            et_popup_description.getText().toString(),
+                                            autoComplete_popup_category.getText().toString(),
+                                            imageDownloadLink,
+                                            currentUser.getUid(),
+                                            imageAvatar);
+
+                                    // finally add post to firebase database
+                                    updatePost(post);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    showToast(e.getMessage());
+                                    popup_progressbar.setVisibility(View.INVISIBLE);
+                                    iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+                                }
+                            });
+
+                        }
+                    });
+            }
+        }
+        else
+            {
+            showToast("Detail harus diisi");
+            iv_popup_addPost_btn.setVisibility(View.VISIBLE);
+            popup_progressbar.setVisibility(View.INVISIBLE);
+
+        }
     }
 
     private void updatePost(Post post) {
