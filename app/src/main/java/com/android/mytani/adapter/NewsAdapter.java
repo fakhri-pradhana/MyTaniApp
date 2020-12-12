@@ -24,7 +24,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
@@ -32,7 +31,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     private List<Article> articles;
     private Context context;
     private OnItemClickListener onItemClickListener;
-
 
     public NewsAdapter(List<Article> articles, Context context) {
         this.articles = articles;
@@ -86,6 +84,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount() {
+
         return articles.size();
     }
 
@@ -123,7 +122,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
         @Override
         public void onClick(View v) {
-
             onItemClickListener.onItemClick(v, getAdapterPosition());
         }
     }

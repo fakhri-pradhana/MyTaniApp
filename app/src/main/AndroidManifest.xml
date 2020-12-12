@@ -21,6 +21,7 @@
         <activity
             android:name=".activity.PostDetailActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.NewsDetailActivity"/>
         <activity android:name=".activity.NavigationBar" />
         <activity android:name=".UserProfile" />
         <activity android:name=".activity.Register" />

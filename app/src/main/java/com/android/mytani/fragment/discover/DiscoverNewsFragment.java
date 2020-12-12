@@ -1,5 +1,6 @@
 package com.android.mytani.fragment.discover;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.mytani.R;
 import com.android.mytani.Utils;
+import com.android.mytani.activity.NewsDetailActivity;
 import com.android.mytani.adapter.NewsAdapter;
 import com.android.mytani.api.ApiClient;
 import com.android.mytani.api.ApiInterface;
@@ -36,15 +38,12 @@ public class DiscoverNewsFragment extends Fragment {
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter newsAdapter;
     private TextView topHeadline;
-    private SwipeRefreshLayout swipeRefreshLayout;
-//    private TextView errorTitle, errorMessage;
-//    private Button btnRetry;
+    private SearchView searchview_discoverNews;
+
 
     public DiscoverNewsFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +52,8 @@ public class DiscoverNewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_discover_news, container, false);
 
+        searchview_discoverNews= view.findViewById(R.id.searchview_discoverNews);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -60,20 +61,43 @@ public class DiscoverNewsFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.hasFixedSize();
         topHeadline = view.findViewById(R.id.topheadelines);
-        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
 
-        LoadJson();
+
+        searchview_discoverNews.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() > 2){
+                    LoadJson(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                LoadJson(newText);
+                return false;
+            }
+        });
+        LoadJson("");
         return view;
     }
 
-    public void LoadJson(){
+
+    public void LoadJson(final String keyword){
 
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
 
         String country = Utils.getCountry();
+        String language = Utils.getLanguage();
 
         Call<News> call;
-        call = apiInterface.getNews(country, API_KEY);
+
+        if (keyword.length() > 0 ) {
+            call = apiInterface.getNewsSearch(keyword, language, "publishedAt", API_KEY);
+        } else {
+            call = apiInterface.getNews(country, API_KEY);
+        }
+
 
         call.enqueue(new Callback<News>() {
             @Override
@@ -92,20 +116,37 @@ public class DiscoverNewsFragment extends Fragment {
                     initListener();
 
                     topHeadline.setVisibility(View.VISIBLE);
-                    swipeRefreshLayout.setRefreshing(false);
-
 
                 } else {
+                    topHeadline.setVisibility(View.INVISIBLE);
                     Toast.makeText(getActivity(), "No Result", Toast.LENGTH_SHORT).show();
                 }
             }
 
-            private void initListener() {
-            }
-
             @Override
             public void onFailure(Call<News> call, Throwable t) {
+                topHeadline.setVisibility(View.INVISIBLE);
 
+            }
+        });
+    }
+
+    private void initListener() {
+
+        newsAdapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), NewsDetailActivity.class);
+
+                Article article = articles.get(position);
+                intent.putExtra("url", article.getUrl());
+                intent.putExtra("title", article.getTitle());
+                intent.putExtra("img", article.getUrlToImage());
+                intent.putExtra("date", article.getPublishedAt());
+                intent.putExtra("source", article.getSource().getName());
+                intent.putExtra("author", article.getAuthor());
+
+                startActivity(intent);
             }
         });
 
