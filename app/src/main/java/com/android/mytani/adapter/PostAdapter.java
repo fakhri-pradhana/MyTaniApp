@@ -2,6 +2,7 @@ package com.android.mytani.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                 .into(holder.iv_imgPost);
         Glide.with(context).load(mData.get(position).getUserPhoto()).into(holder.img_postProfile);
 
+        String catPost = mData.get(position).getCategory();
+//        Log.d("POST ADAPTER ", "INI CATEGORY " + catPost);
+
+        if (catPost.equals("Buah")){
+            Glide.with(context).load(R.drawable.cat_fruit).into(holder.iv_catPost);
+        } else if (catPost.equals("Sayur")){
+            Glide.with(context).load(R.drawable.cat_veggie).into(holder.iv_catPost);
+        } else if (catPost.equals("Biji")){
+            Glide.with(context).load(R.drawable.cat_seed).into(holder.iv_catPost);
+        }else if (catPost.equals("Pohon")){
+            Glide.with(context).load(R.drawable.cat_tree).into(holder.iv_catPost);
+        }
+
     }
 
     @Override
@@ -98,13 +112,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView tv_title;
-        ImageView iv_imgPost, img_postProfile;
+        ImageView iv_imgPost, img_postProfile, iv_catPost;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tv_title = itemView.findViewById(R.id.row_post_title);
             iv_imgPost = itemView.findViewById(R.id.row_post_img);
             img_postProfile = itemView.findViewById(R.id.row_post_profile_img);
+            iv_catPost = itemView.findViewById(R.id.iv_catpost_img);
 
             itemView.setOnClickListener(new View.OnClickListener() {
 

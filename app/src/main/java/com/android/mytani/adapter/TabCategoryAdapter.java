@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.android.mytani.fragment.category.CategoryFruitFragment;
 import com.android.mytani.fragment.category.CategorySeedFragment;
 import com.android.mytani.fragment.category.CategoryTreeFragment;
+import com.android.mytani.fragment.category.CategoryVeggieFragment;
 import com.android.mytani.fragment.discover.DiscoverForumFragment;
 import com.android.mytani.fragment.discover.DiscoverNewsFragment;
 import com.android.mytani.fragment.discover.DiscoverPriceFragment;
@@ -29,14 +30,16 @@ public class TabCategoryAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
+                showLog("INI FRUIT");
                 return new CategoryFruitFragment();
             case 1:
-                showLog("FRAGMENT NEWS");
-                return new CategorySeedFragment();
+                showLog("INI veggie");
+                return new CategoryVeggieFragment();
             case 2:
-                showLog("FRAGMENT PRICE");
-                return new CategoryTreeFragment();
+                showLog("INI seed");
+                return new CategorySeedFragment();
             case 3:
+                showLog("INI tree");
                 return new CategoryTreeFragment();
             default: return new CategoryFruitFragment();
 

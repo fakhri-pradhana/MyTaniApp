@@ -132,6 +132,15 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
         til_comment = findViewById(R.id.til_comment);
         btn_addComment = findViewById(R.id.btn_detailPost_addComment);
 
+        Post postIntent = (Post) getIntent().getSerializableExtra("Post");
+
+
+        showLog("USER ID ONCREATE 1 ", postIntent.getUserId());
+        showLog("USER ID ONCREATE 2 ", currentUser.getUid());
+        if (postIntent.getUserId().equals(currentUser.getUid())){
+            iv_optionBtn.setVisibility(View.VISIBLE);
+        }
+
         initializeEditPopup();
 
         setupPopImageClick();
@@ -526,8 +535,9 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
     }
 
     private void performEditPost() {
+        // serializable :
         Post postIntent = (Post) getIntent().getSerializableExtra("Post");
-        Uri uploadImage;
+
         iv_popup_addPost_btn.setVisibility(View.INVISIBLE);
         popup_progressbar.setVisibility(View.VISIBLE);
 
