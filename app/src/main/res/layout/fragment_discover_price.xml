@@ -1,21 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragment.discover.DiscoverPriceFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="DISCOVER PRICE" />
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="10dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="DISCOVER PRICE" />
+                <RelativeLayout
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-</LinearLayout>
+                    <ImageView
+                        android:id="@+id/img_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@drawable/komoditas"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:src="@drawable/bottom_shadow"
+                        android:layout_alignBottom="@id/img_price"/>
+
+                    <FrameLayout
+                        android:id="@+id/layoutDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/img_price"
+                        android:background="@drawable/round_white"
+                        android:padding="5dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="-50dp">
+
+                        <ImageView
+                            android:src="@drawable/ic_date"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp" />
+                        <TextView
+                            android:textColor="#606060"
+                            android:id="@+id/tv_discover_tgl"
+                            android:layout_marginLeft="27dp"
+                            android:layout_marginRight="10dp"
+                            android:text="01 January 1990"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Harga Komoditas Pertanian Indonesia"
+                        android:textSize="17sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/img_price"
+                        android:id="@+id/row_post_title" />
+
+
+                    <TextView
+                        android:id="@+id/desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/row_post_title"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/desc_price_comodity"
+                        />
+
+                    <TextView
+                        android:id="@+id/source"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/desc"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text="http://infoharga.bappebti.go.id/" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="7dp"
+                app:cardElevation="2dp"
+                android:layout_below="@id/cardView"
+                app:cardCornerRadius="10dp">
+
+                <RelativeLayout
+                    android:background="?android:attr/selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/img_price2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:src="@drawable/bottom_shadow"
+                        android:layout_alignBottom="@id/img_price2"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:text="Lihat lokasi toko alat tani"
+                        android:textSize="17sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/img_price2"
+                        android:id="@+id/row_post_title2" />
+
+
+                    <TextView
+                        android:id="@+id/desc2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/row_post_title2"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Temukan harga terbaik langsung dengan penjual di dekat anda"
+                        />
+
+                    <TextView
+                        android:id="@+id/source2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/desc2"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="sans-serif-light"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text="http://infoharga.bappebti.go.id/" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

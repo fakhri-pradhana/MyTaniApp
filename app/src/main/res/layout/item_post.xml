@@ -101,14 +101,14 @@
                 android:textSize="17sp"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/img"
-                android:id="@+id/title" />
+                android:id="@+id/row_post_title" />
 
 
             <TextView
                 android:id="@+id/desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
+                android:layout_below="@id/row_post_title"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="5dp"

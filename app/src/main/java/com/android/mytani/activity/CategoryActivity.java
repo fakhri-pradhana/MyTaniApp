@@ -1,5 +1,6 @@
 package com.android.mytani.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
@@ -9,17 +10,29 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.android.mytani.R;
+import com.android.mytani.adapter.PostAdapter;
 import com.android.mytani.adapter.TabCategoryAdapter;
 import com.android.mytani.adapter.TabDiscoverAdapter;
+import com.android.mytani.models.Post;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity {
 
+    // view variables
     ViewPager mPager;
     TabLayout mTabLayout;
     TabItem item_fruit, item_veggie, item_seed, item_tree;
     TabCategoryAdapter tabCategoryAdapter;
+
 
     @Override
     public void onStart() {
@@ -48,6 +61,7 @@ public class CategoryActivity extends AppCompatActivity {
             }
         });
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+
     }
 
     private int Tabposition() {
@@ -79,5 +93,6 @@ public class CategoryActivity extends AppCompatActivity {
         item_veggie = findViewById(R.id.tab_veggie);
         item_seed = findViewById(R.id.tab_seed);
         item_tree = findViewById(R.id.tab_tree);
+
     }
 }
