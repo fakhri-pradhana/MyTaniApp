@@ -8,6 +8,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.android.mytani.R;
 import com.android.mytani.adapter.PostAdapter;
@@ -32,6 +34,8 @@ public class CategoryActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     TabItem item_fruit, item_veggie, item_seed, item_tree;
     TabCategoryAdapter tabCategoryAdapter;
+
+    ImageView backBtn_img;
 
 
     @Override
@@ -93,6 +97,11 @@ public class CategoryActivity extends AppCompatActivity {
         item_veggie = findViewById(R.id.tab_veggie);
         item_seed = findViewById(R.id.tab_seed);
         item_tree = findViewById(R.id.tab_tree);
+        backBtn_img = findViewById(R.id.iv_cat_back);
 
+    }
+
+    public void goBack(View view) {
+        finish();
     }
 }

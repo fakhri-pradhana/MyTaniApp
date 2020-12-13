@@ -20,16 +20,27 @@
 
 
             <ImageView
+                android:id="@+id/iv_detail_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:elevation="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_chevron_left" />
+
+            <ImageView
                 android:id="@+id/iv_detailoption_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
                 android:elevation="25dp"
+                android:onClick="showOptionPopupMenu"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:onClick="showOptionPopupMenu"
                 app:srcCompat="@drawable/ic_option" />
 
             <ImageView
@@ -53,6 +64,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
+                android:onClick="closeDetailPost"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView

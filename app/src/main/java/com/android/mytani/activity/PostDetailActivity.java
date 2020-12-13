@@ -432,10 +432,17 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
     private void deletePost() {
         Post postIntent = (Post) getIntent().getSerializableExtra("Post");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference().child("posts").child(postIntent.getPostKey());
 
-        myRef.removeValue();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        // get post ref
+        DatabaseReference postRef = database.getReference().child("posts")
+                .child(postIntent.getPostKey());
+        // get comment ref
+        DatabaseReference commentRef = database.getReference().child("comments")
+                .child(postIntent.getPostKey());
+
+        postRef.removeValue();
+        commentRef.removeValue();
 
         showToast("Forum berhasil dihapus");
 
@@ -660,4 +667,7 @@ public class PostDetailActivity extends AppCompatActivity implements PopupMenu.O
         });
     }
 
+    public void closeDetailPost(View view) {
+        finish();
+    }
 }

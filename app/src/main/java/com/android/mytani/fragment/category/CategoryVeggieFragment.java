@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.mytani.R;
@@ -36,6 +37,7 @@ public class CategoryVeggieFragment extends Fragment {
     PostAdapter postAdapter;
     RecyclerView rv_veggieCat;
     SearchView searchView_catVeggie;
+    RelativeLayout relative_illustration_notfound;
 
     // list
     List<Post> filteredPostList;
@@ -70,6 +72,7 @@ public class CategoryVeggieFragment extends Fragment {
 
         // initialize recyclerview
         rv_veggieCat = view.findViewById(R.id.rv_veggieCat);
+        relative_illustration_notfound = view.findViewById(R.id.relative_illustration_notfound);
         rv_veggieCat.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_veggieCat.hasFixedSize();
 
@@ -93,6 +96,7 @@ public class CategoryVeggieFragment extends Fragment {
                     rv_veggieCat.setAdapter(postAdapter);
                 } else {
                     searchView_catVeggie.setVisibility(View.INVISIBLE);
+                    relative_illustration_notfound.setVisibility(View.VISIBLE);
                 }
             }
             @Override

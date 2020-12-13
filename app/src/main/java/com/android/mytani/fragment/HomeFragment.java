@@ -3,6 +3,7 @@ package com.android.mytani.fragment;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -420,6 +421,9 @@ public class HomeFragment extends Fragment{
     }
 
     private void addPost(Post post) {
+        final ProgressDialog pd = new ProgressDialog(getActivity());
+        pd.setTitle("Uploading image ...");
+        pd.show();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference().child("posts").push();
 

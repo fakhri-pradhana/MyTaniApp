@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment {
     // firebase variables
     private FirebaseStorage firebaseStorage;
     private StorageReference mStorageRef;
+    DatabaseReference dataPostRef;
 
 
     final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -87,8 +88,27 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        String uid = firebaseAuth.getUid();
         // get post data from database
+        Query query = dataPostRef.orderByChild("userId").equalTo(uid);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int dataCount = (int) snapshot.getChildrenCount();
+                showLog(String.valueOf(dataCount));
+                tv_jmlPertanyaan.setText(String.valueOf(dataCount));
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+    private void showLog(String s) {
+        Log.d("PROFILE FRAGMENT ", s);
     }
 
     @Override
@@ -99,9 +119,11 @@ public class ProfileFragment extends Fragment {
 
 
         showUserProfileData(view);
+        dataPostRef = firebaseDatabase.getReference("posts");
 
         cv_post = view.findViewById(R.id.cv_post);
         iv_profile = view.findViewById(R.id.iv_profile_avatar);
+        tv_jmlPertanyaan = view.findViewById(R.id.tv_profile_jml_pertanyaan);
 
         // TODO TAMPILKAN JML POST
         cv_post.setOnClickListener(new View.OnClickListener() {

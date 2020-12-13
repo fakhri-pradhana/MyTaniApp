@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.mytani.R;
@@ -35,6 +36,7 @@ public class CategorySeedFragment extends Fragment {
     PostAdapter postAdapter;
     RecyclerView rv_seedCat;
     SearchView searchview_catSeed;
+    RelativeLayout relative_illustration_notfound;
 
     // list
     List<Post> filteredPostList;
@@ -66,6 +68,7 @@ public class CategorySeedFragment extends Fragment {
                         rv_seedCat.setAdapter(postAdapter);
                     } else {
                         searchview_catSeed.setVisibility(View.INVISIBLE);
+                        relative_illustration_notfound.setVisibility(View.VISIBLE);
                     }
 
             }
@@ -93,6 +96,7 @@ public class CategorySeedFragment extends Fragment {
 
         // initialize recyclerview
         rv_seedCat = view.findViewById(R.id.rv_seedCat);
+        relative_illustration_notfound = view.findViewById(R.id.relative_illustration_notfound);
         rv_seedCat.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_seedCat.hasFixedSize();
 

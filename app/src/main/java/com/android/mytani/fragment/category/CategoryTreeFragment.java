@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.mytani.R;
 import com.android.mytani.adapter.PostAdapter;
@@ -34,6 +35,7 @@ public class CategoryTreeFragment extends Fragment {
     PostAdapter postAdapter;
     RecyclerView rv_treeCat;
     SearchView searchview_catTree;
+    RelativeLayout relative_illustration_notfound;
 
     // list
     List<Post> filteredPostList;
@@ -66,6 +68,7 @@ public class CategoryTreeFragment extends Fragment {
                     rv_treeCat.setAdapter(postAdapter);
                 } else {
                     searchview_catTree.setVisibility(View.INVISIBLE);
+                    relative_illustration_notfound.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -89,6 +92,7 @@ public class CategoryTreeFragment extends Fragment {
 
         // initialize recyclerview
         rv_treeCat = view.findViewById(R.id.rv_treeCat);
+        relative_illustration_notfound = view.findViewById(R.id.relative_illustration_notfound);
         rv_treeCat.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_treeCat.hasFixedSize();
 

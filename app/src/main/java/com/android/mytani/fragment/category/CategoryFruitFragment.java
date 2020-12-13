@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.mytani.R;
 import com.android.mytani.adapter.PostAdapter;
@@ -35,6 +36,7 @@ public class CategoryFruitFragment extends Fragment {
     PostAdapter postAdapter;
     RecyclerView rv_fruitCat;
     SearchView searchview_catFruit;
+    RelativeLayout relative_illustration_notfound;
 
     // list
     List<Post> filteredPostList;
@@ -68,6 +70,7 @@ public class CategoryFruitFragment extends Fragment {
                     rv_fruitCat.setAdapter(postAdapter);
                 } else {
                     searchview_catFruit.setVisibility(View.INVISIBLE);
+                    relative_illustration_notfound.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -95,6 +98,7 @@ public class CategoryFruitFragment extends Fragment {
 
         // initialize recyclerview
         rv_fruitCat = view.findViewById(R.id.rv_fruitCat);
+        relative_illustration_notfound = view.findViewById(R.id.relative_illustration_notfound);
         rv_fruitCat.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv_fruitCat.hasFixedSize();
 

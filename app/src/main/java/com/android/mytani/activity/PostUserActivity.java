@@ -62,6 +62,7 @@ public class PostUserActivity extends AppCompatActivity {
                     filteredPostList.add(post);
                 }
                 dataCount = (int) snapshot.getChildrenCount();
+                tv_dataCount.setText("Menampilkan " + String.valueOf(dataCount) + " forum");
                 showLog(String.valueOf(dataCount));
                 postAdapter = new PostAdapter(PostUserActivity.this, filteredPostList);
                 rc_userPost.setAdapter(postAdapter);

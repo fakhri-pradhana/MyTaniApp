@@ -19,4 +19,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <RelativeLayout
+        android:id="@+id/relative_illustration_notfound"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_illustration_notFound"
+            android:layout_centerInParent="true"
+            android:layout_width="250dp"
+            android:layout_height="300dp"
+            android:background="@drawable/illustration_data_not_found"/>
+        <TextView
+            android:id="@+id/tv_tidakketemu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duuh, forum tidak ditemukan"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/iv_illustration_notFound"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Cobalah untuk membuat forum dengan kategori ini"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="12sp"
+            android:layout_below="@+id/tv_tidakketemu"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

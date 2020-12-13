@@ -18,6 +18,15 @@
             android:layout_height="60dp"
             android:background="@drawable/rounded_top_background">
 
+            <ImageView
+                android:id="@+id/iv_cat_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/ic_chevron_left"
+                android:layout_centerVertical="true"
+                android:onClick="goBack"
+                android:layout_marginLeft="24dp"/>
+
             <TextView
                 android:id="@+id/pencarian"
                 android:layout_width="wrap_content"
@@ -54,7 +63,7 @@
                 android:id="@+id/tab_seed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="berbiji" />
+                android:text="biji-bijian" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tab_tree"
